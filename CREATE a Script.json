@@ -1,0 +1,2146 @@
+{
+  "name": "Создание готовых скриптов",
+  "nodes": [
+    {
+      "parameters": {
+        "operation": "appendOrUpdate",
+        "documentId": {
+          "__rl": true,
+          "value": "1eNPg9bhl3fLL-WIioNJYrIPI_Tn9GRz-zvJQCZyrb4k",
+          "mode": "list",
+          "cachedResultName": " КОНТЕНТ ЗАВОД Рабочий",
+          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/1eNPg9bhl3fLL-WIioNJYrIPI_Tn9GRz-zvJQCZyrb4k/edit?usp=drivesdk"
+        },
+        "sheetName": {
+          "__rl": true,
+          "value": 129910060,
+          "mode": "list",
+          "cachedResultName": "Скрипты 2",
+          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/1eNPg9bhl3fLL-WIioNJYrIPI_Tn9GRz-zvJQCZyrb4k/edit#gid=129910060"
+        },
+        "columns": {
+          "mappingMode": "defineBelow",
+          "value": {
+            "Дата": "={{ $now.format('dd.MM.yy HH:mm') }}",
+            "Название": "={{ $json.output['Название'] }}",
+            "Скрипт": "={{ $json.output['Скрипт'] }}",
+            "Описание": "={{ $json.output['Описание'] }}",
+            "Статус": "Новый",
+            "Аккаунт": "={{ $('Найти YouTube в статусе Создать скрипт').item.json['Аккаунт'] }}",
+            "ID поста": "={{ (Date.now().toString(36) + Math.random().toString(36).substring(2, 8)).substring(0,12) }}",
+            "Источник": "=Shorts",
+            "Ссылка на исходное видео": "={{ $('Найти YouTube в статусе Создать скрипт').item.json['Ссылка на ролик'] }}"
+          },
+          "matchingColumns": [
+            "Ссылка на исходное видео"
+          ],
+          "schema": [
+            {
+              "id": "Дата",
+              "displayName": "Дата",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "Источник",
+              "displayName": "Источник",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": false
+            },
+            {
+              "id": "Название",
+              "displayName": "Название",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "Скрипт",
+              "displayName": "Скрипт",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "Описание",
+              "displayName": "Описание",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "Статус",
+              "displayName": "Статус",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "Исходный скрипт",
+              "displayName": "Исходный скрипт",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": true
+            },
+            {
+              "id": "Ссылка на исходное видео",
+              "displayName": "Ссылка на исходное видео",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": false
+            },
+            {
+              "id": "Аккаунт",
+              "displayName": "Аккаунт",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "ID поста",
+              "displayName": "ID поста",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": false
+            },
+            {
+              "id": "ФОТО ДЛЯ СКРИПТА",
+              "displayName": "ФОТО ДЛЯ СКРИПТА",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": true
+            }
+          ],
+          "attemptToConvertTypes": false,
+          "convertFieldsToString": false
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.googleSheets",
+      "typeVersion": 4.7,
+      "position": [
+        1472,
+        464
+      ],
+      "id": "f29cc416-2c13-4f8d-b742-b83114875574",
+      "name": "Записать готовый скрипт",
+      "retryOnFail": true,
+      "credentials": {
+        "googleSheetsOAuth2Api": {
+          "id": "hn1lXHkzKd50EsOG",
+          "name": "Google Sheets account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "operation": "update",
+        "documentId": {
+          "__rl": true,
+          "value": "1eNPg9bhl3fLL-WIioNJYrIPI_Tn9GRz-zvJQCZyrb4k",
+          "mode": "list",
+          "cachedResultName": " КОНТЕНТ ЗАВОД Рабочий",
+          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/1eNPg9bhl3fLL-WIioNJYrIPI_Tn9GRz-zvJQCZyrb4k/edit?usp=drivesdk"
+        },
+        "sheetName": {
+          "__rl": true,
+          "value": 751580016,
+          "mode": "list",
+          "cachedResultName": "ЮТУБ 2",
+          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/1eNPg9bhl3fLL-WIioNJYrIPI_Tn9GRz-zvJQCZyrb4k/edit#gid=751580016"
+        },
+        "columns": {
+          "mappingMode": "defineBelow",
+          "value": {
+            "ID поста": "={{ $('Найти YouTube в статусе Создать скрипт').item.json['ID поста'] }}",
+            "Статус": "Скрипт готов"
+          },
+          "matchingColumns": [
+            "ID поста"
+          ],
+          "schema": [
+            {
+              "id": "Аватар",
+              "displayName": "Аватар",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": true
+            },
+            {
+              "id": "Тип поста",
+              "displayName": "Тип поста",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": true
+            },
+            {
+              "id": "Аккаунт",
+              "displayName": "Аккаунт",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": true
+            },
+            {
+              "id": "Название",
+              "displayName": "Название",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": true
+            },
+            {
+              "id": "Ссылка на ролик",
+              "displayName": "Ссылка на ролик",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": true
+            },
+            {
+              "id": "Статус",
+              "displayName": "Статус",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "Вовлеченность",
+              "displayName": "Вовлеченность",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": true
+            },
+            {
+              "id": "Просмотры",
+              "displayName": "Просмотры",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": true
+            },
+            {
+              "id": "Лайки",
+              "displayName": "Лайки",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": true
+            },
+            {
+              "id": "Комментарии",
+              "displayName": "Комментарии",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": true
+            },
+            {
+              "id": "Подписчики",
+              "displayName": "Подписчики",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": true
+            },
+            {
+              "id": "Дата записи",
+              "displayName": "Дата записи",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": true
+            },
+            {
+              "id": "Дата поста",
+              "displayName": "Дата поста",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": true
+            },
+            {
+              "id": "Ссылка на видео (временная)",
+              "displayName": "Ссылка на видео (временная)",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": true
+            },
+            {
+              "id": "ID поста",
+              "displayName": "ID поста",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": false
+            },
+            {
+              "id": "ID аккаунта",
+              "displayName": "ID аккаунта",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": true
+            },
+            {
+              "id": "row_number",
+              "displayName": "row_number",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "number",
+              "canBeUsedToMatch": true,
+              "readOnly": true,
+              "removed": true
+            }
+          ],
+          "attemptToConvertTypes": false,
+          "convertFieldsToString": false
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.googleSheets",
+      "typeVersion": 4.7,
+      "position": [
+        1728,
+        464
+      ],
+      "id": "ac54a131-7bac-437d-8c9f-62bb791b6d14",
+      "name": "Изменить статус в таблице Reels",
+      "credentials": {
+        "googleSheetsOAuth2Api": {
+          "id": "hn1lXHkzKd50EsOG",
+          "name": "Google Sheets account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "url": "={{ $('Get TikTok Video Details').first().json.aweme_detail.video.download_no_watermark_addr.url_list[0] }}",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [
+        848,
+        1184
+      ],
+      "id": "b8f30205-9ddb-4825-b70b-cc9114a2f13c",
+      "name": "Скачать видео",
+      "onError": "continueErrorOutput"
+    },
+    {
+      "parameters": {
+        "inputSource": "passthrough"
+      },
+      "type": "n8n-nodes-base.executeWorkflowTrigger",
+      "typeVersion": 1.1,
+      "position": [
+        -448,
+        464
+      ],
+      "id": "3961b3be-5dd0-4d3f-8f7a-a7e07442ff44",
+      "name": "From Telegram"
+    },
+    {
+      "parameters": {
+        "chatId": "={{ $('From Telegram').item.json.message.chat.id }}",
+        "text": "Новые скрипты созданы и добавлены в таблицу✅",
+        "additionalFields": {
+          "appendAttribution": false
+        }
+      },
+      "type": "n8n-nodes-base.telegram",
+      "typeVersion": 1.2,
+      "position": [
+        2544,
+        480
+      ],
+      "id": "9392c102-1b82-44cd-ba5e-0cae6887df07",
+      "name": "Уведомление о завершении",
+      "webhookId": "52b68c4b-8496-4435-a7b3-c2e6b9712144",
+      "executeOnce": true,
+      "credentials": {
+        "telegramApi": {
+          "id": "iVXsUnIYVKpnKKMQ",
+          "name": "Telegram account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "chatId": "={{ $('From Telegram').item.json.message.chat.id }}",
+        "text": "Создаю новые скрипты....⏳",
+        "additionalFields": {
+          "appendAttribution": false
+        }
+      },
+      "type": "n8n-nodes-base.telegram",
+      "typeVersion": 1.2,
+      "position": [
+        -176,
+        464
+      ],
+      "id": "59f718f5-2e89-4733-a359-4d805a085f07",
+      "name": "Уведомление о запуске",
+      "webhookId": "c4d582d6-8138-4603-bb4d-b15efe036d21",
+      "executeOnce": false,
+      "credentials": {
+        "telegramApi": {
+          "id": "iVXsUnIYVKpnKKMQ",
+          "name": "Telegram account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "url": "https://api.scrapecreators.com/v1/youtube/video",
+        "authentication": "genericCredentialType",
+        "genericAuthType": "httpHeaderAuth",
+        "sendQuery": true,
+        "queryParameters": {
+          "parameters": [
+            {
+              "name": "url",
+              "value": "={{ $json['Ссылка на ролик'] }}"
+            },
+            {
+              "name": "get_transcript",
+              "value": "true"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [
+        512,
+        464
+      ],
+      "id": "916ffd6a-d963-4c76-9654-fbc41e935a69",
+      "name": "Get Youtube Transcript",
+      "credentials": {
+        "httpHeaderAuth": {
+          "id": "YtUjqWQ8rBp7G7xs",
+          "name": "Scraper"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "documentId": {
+          "__rl": true,
+          "value": "1eNPg9bhl3fLL-WIioNJYrIPI_Tn9GRz-zvJQCZyrb4k",
+          "mode": "list",
+          "cachedResultName": " КОНТЕНТ ЗАВОД Рабочий",
+          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/1eNPg9bhl3fLL-WIioNJYrIPI_Tn9GRz-zvJQCZyrb4k/edit?usp=drivesdk"
+        },
+        "sheetName": {
+          "__rl": true,
+          "value": 751580016,
+          "mode": "list",
+          "cachedResultName": "ЮТУБ 2",
+          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/1eNPg9bhl3fLL-WIioNJYrIPI_Tn9GRz-zvJQCZyrb4k/edit#gid=751580016"
+        },
+        "filtersUI": {
+          "values": [
+            {
+              "lookupColumn": "Статус",
+              "lookupValue": "Создать скрипт"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.googleSheets",
+      "typeVersion": 4.7,
+      "position": [
+        240,
+        464
+      ],
+      "id": "9b57697c-a249-4080-8af5-0771b914dc0e",
+      "name": "Найти YouTube в статусе Создать скрипт",
+      "credentials": {
+        "googleSheetsOAuth2Api": {
+          "id": "hn1lXHkzKd50EsOG",
+          "name": "Google Sheets account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "documentId": {
+          "__rl": true,
+          "value": "1eNPg9bhl3fLL-WIioNJYrIPI_Tn9GRz-zvJQCZyrb4k",
+          "mode": "list",
+          "cachedResultName": " КОНТЕНТ ЗАВОД Рабочий",
+          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/1eNPg9bhl3fLL-WIioNJYrIPI_Tn9GRz-zvJQCZyrb4k/edit?usp=drivesdk"
+        },
+        "sheetName": {
+          "__rl": true,
+          "value": 326059641,
+          "mode": "list",
+          "cachedResultName": "TikTok",
+          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/1eNPg9bhl3fLL-WIioNJYrIPI_Tn9GRz-zvJQCZyrb4k/edit#gid=326059641"
+        },
+        "filtersUI": {
+          "values": [
+            {
+              "lookupColumn": "Статус",
+              "lookupValue": "Создать скрипт"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.googleSheets",
+      "typeVersion": 4.7,
+      "position": [
+        224,
+        1040
+      ],
+      "id": "f8d7f2a6-3259-4482-beb4-0c67b749b163",
+      "name": "Найти TikTok в статусе Создать скрипт",
+      "credentials": {
+        "googleSheetsOAuth2Api": {
+          "id": "hn1lXHkzKd50EsOG",
+          "name": "Google Sheets account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "documentId": {
+          "__rl": true,
+          "value": "1eNPg9bhl3fLL-WIioNJYrIPI_Tn9GRz-zvJQCZyrb4k",
+          "mode": "list",
+          "cachedResultName": " КОНТЕНТ ЗАВОД Рабочий",
+          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/1eNPg9bhl3fLL-WIioNJYrIPI_Tn9GRz-zvJQCZyrb4k/edit?usp=drivesdk"
+        },
+        "sheetName": {
+          "__rl": true,
+          "value": 1407963696,
+          "mode": "list",
+          "cachedResultName": "Instagram",
+          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/1eNPg9bhl3fLL-WIioNJYrIPI_Tn9GRz-zvJQCZyrb4k/edit#gid=1407963696"
+        },
+        "filtersUI": {
+          "values": [
+            {
+              "lookupColumn": "Статус",
+              "lookupValue": "Создать скрипт"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.googleSheets",
+      "typeVersion": 4.7,
+      "position": [
+        272,
+        -48
+      ],
+      "id": "8138d3b2-a71a-483e-8eb4-fe55e17640b5",
+      "name": "Найти Insta в статусе Создать скрипт",
+      "credentials": {
+        "googleSheetsOAuth2Api": {
+          "id": "hn1lXHkzKd50EsOG",
+          "name": "Google Sheets account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "operation": "appendOrUpdate",
+        "documentId": {
+          "__rl": true,
+          "value": "1eNPg9bhl3fLL-WIioNJYrIPI_Tn9GRz-zvJQCZyrb4k",
+          "mode": "list",
+          "cachedResultName": " КОНТЕНТ ЗАВОД Рабочий",
+          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/1eNPg9bhl3fLL-WIioNJYrIPI_Tn9GRz-zvJQCZyrb4k/edit?usp=drivesdk"
+        },
+        "sheetName": {
+          "__rl": true,
+          "value": 129910060,
+          "mode": "list",
+          "cachedResultName": "Скрипты 2",
+          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/1eNPg9bhl3fLL-WIioNJYrIPI_Tn9GRz-zvJQCZyrb4k/edit#gid=129910060"
+        },
+        "columns": {
+          "mappingMode": "defineBelow",
+          "value": {
+            "Дата": "={{ $now.format('dd.MM.yy HH:mm') }}",
+            "Название": "={{ $json.output['Название'] }}",
+            "Скрипт": "={{ $json.output['Скрипт'] }}",
+            "Описание": "={{ $json.output['Описание'] }}",
+            "Статус": "Новый",
+            "Исходный скрипт": "={{ $('Get Instagram Transcript1').item.json.transcripts[0].text }}",
+            "Аккаунт": "={{ $('Найти Insta в статусе Создать скрипт').item.json['Аккаунт'] }}",
+            "ID поста": "={{ (Date.now().toString(36) + Math.random().toString(36).substring(2, 8)).substring(0,12) }}",
+            "Источник": "=Reels",
+            "Ссылка на исходное видео": "={{ $('Найти Insta в статусе Создать скрипт').item.json['Ссылка на ролик'] }}"
+          },
+          "matchingColumns": [
+            "Ссылка на исходное видео"
+          ],
+          "schema": [
+            {
+              "id": "Дата",
+              "displayName": "Дата",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "Источник",
+              "displayName": "Источник",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": false
+            },
+            {
+              "id": "Название",
+              "displayName": "Название",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "Скрипт",
+              "displayName": "Скрипт",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "Описание",
+              "displayName": "Описание",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "Статус",
+              "displayName": "Статус",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "Исходный скрипт",
+              "displayName": "Исходный скрипт",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "Ссылка на исходное видео",
+              "displayName": "Ссылка на исходное видео",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": false
+            },
+            {
+              "id": "Аккаунт",
+              "displayName": "Аккаунт",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "ID поста",
+              "displayName": "ID поста",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": false
+            }
+          ],
+          "attemptToConvertTypes": false,
+          "convertFieldsToString": false
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.googleSheets",
+      "typeVersion": 4.7,
+      "position": [
+        1344,
+        -48
+      ],
+      "id": "a9209190-f65d-4ad7-982c-10241842c549",
+      "name": "Записать готовый скрипт1",
+      "credentials": {
+        "googleSheetsOAuth2Api": {
+          "id": "hn1lXHkzKd50EsOG",
+          "name": "Google Sheets account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "operation": "update",
+        "documentId": {
+          "__rl": true,
+          "value": "1eNPg9bhl3fLL-WIioNJYrIPI_Tn9GRz-zvJQCZyrb4k",
+          "mode": "list",
+          "cachedResultName": " КОНТЕНТ ЗАВОД Рабочий",
+          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/1eNPg9bhl3fLL-WIioNJYrIPI_Tn9GRz-zvJQCZyrb4k/edit?usp=drivesdk"
+        },
+        "sheetName": {
+          "__rl": true,
+          "value": 1407963696,
+          "mode": "list",
+          "cachedResultName": "Instagram",
+          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/1eNPg9bhl3fLL-WIioNJYrIPI_Tn9GRz-zvJQCZyrb4k/edit#gid=1407963696"
+        },
+        "columns": {
+          "mappingMode": "defineBelow",
+          "value": {
+            "row_number": "={{ $('Найти Insta в статусе Создать скрипт').item.json.row_number }}",
+            "Статус": "Скрипт готов"
+          },
+          "matchingColumns": [
+            "row_number"
+          ],
+          "schema": [
+            {
+              "id": "Тип поста",
+              "displayName": "Тип поста",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": true
+            },
+            {
+              "id": "Аккаунт",
+              "displayName": "Аккаунт",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": true
+            },
+            {
+              "id": "Описание",
+              "displayName": "Описание",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": true
+            },
+            {
+              "id": "Ссылка на ролик",
+              "displayName": "Ссылка на ролик",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": true
+            },
+            {
+              "id": "Статус",
+              "displayName": "Статус",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "Подписчики",
+              "displayName": "Подписчики",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": true
+            },
+            {
+              "id": "Вовлеченность",
+              "displayName": "Вовлеченность",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": true
+            },
+            {
+              "id": "Просмотры",
+              "displayName": "Просмотры",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": true
+            },
+            {
+              "id": "Лайки",
+              "displayName": "Лайки",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": true
+            },
+            {
+              "id": "Комментарии",
+              "displayName": "Комментарии",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": true
+            },
+            {
+              "id": "Длительность",
+              "displayName": "Длительность",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": true
+            },
+            {
+              "id": "Дата поста",
+              "displayName": "Дата поста",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": true
+            },
+            {
+              "id": "Дата записи",
+              "displayName": "Дата записи",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": true
+            },
+            {
+              "id": "Ссылка на видео (временная)",
+              "displayName": "Ссылка на видео (временная)",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": true
+            },
+            {
+              "id": "ID поста",
+              "displayName": "ID поста",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": true
+            },
+            {
+              "id": "ID аккаунта",
+              "displayName": "ID аккаунта",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": true
+            },
+            {
+              "id": "row_number",
+              "displayName": "row_number",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "number",
+              "canBeUsedToMatch": true,
+              "readOnly": true,
+              "removed": false
+            }
+          ],
+          "attemptToConvertTypes": false,
+          "convertFieldsToString": false
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.googleSheets",
+      "typeVersion": 4.7,
+      "position": [
+        1568,
+        -48
+      ],
+      "id": "c1273df4-b4df-4172-8d26-374d01a522ed",
+      "name": "Изменить статус в таблице Reels1",
+      "credentials": {
+        "googleSheetsOAuth2Api": {
+          "id": "hn1lXHkzKd50EsOG",
+          "name": "Google Sheets account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "jsonSchemaExample": "{\n    \"Название\": \"string\",\n    \"Скрипт\":  \"string\" ,\n    \"Описание\": \"string\"\n  }"
+      },
+      "type": "@n8n/n8n-nodes-langchain.outputParserStructured",
+      "typeVersion": 1.3,
+      "position": [
+        1088,
+        688
+      ],
+      "id": "19a82801-7f7b-4f25-b550-5d625ffb280b",
+      "name": "Structured Output Parser2"
+    },
+    {
+      "parameters": {
+        "promptType": "define",
+        "text": "={{ $json.description }}",
+        "hasOutputParser": true,
+        "needsFallback": true,
+        "options": {
+          "systemMessage": "=### Role:\nYou are a social media marketer who creates Reels and Shorts for millions of views. Also you master at repurposing scripts for videos, making video scripts which are even more engaging, driving shares from viewers and impossible to skip.\n\n### Task:\nYou will repurpose and translate to Russian scripts provided for you, improving on it in areas where you deem it weak, but keeping the same tone and structure. \nMake new versions of scripts the most viral.\n- Max length: 45000 sybols\n\n### Instructions:\n1. Repurpose and translate to Russian the provided script keeping similar word counts, flow, and structure. At the beggining you need to send 3 best versions of hooks, that are impossible to skip\n2. If the script is empty or contains only a few words, write \"Reels без слов\" in the \"Скрипт\" section in output.\n2. Repurpose the provided caption, but without hashtags, keeping similar word counts, flow, and structure. \n3. Add name of the reel in 2-4 words - what is the reel about\n4. Max length: 45000 sybols\n\n### Example of output \n\n{\n  \"Название\": \"Искусственный интеллект в действии\",\n  \"Скрипт\": \"- Хук 1: Заберёт ли AI твою работу?\\n- Хук 2: Основатель NVIDIA предупреждает…\\n- Хук 3: 50 % работы за вас!\\n\\n Просто послушайте слова основателя…\",\n  \"Описание\": \"Как AI‑агенты за 24 ч снимают 80 % рутины.\"\n}\n\n• Return **ONLY** valid JSON that matches the schema above.  \n• Use real line breaks (`\\n`) and double breaks (`\\n\\n`) for абзацы — don't output `\\\\n`. \n• Do not add any other keys, comments, or text.\n- Max length: 45000 sybols\n\n\n### Constraints:\n- Don't overuse exclamation marks in scripts.\n- Always output in Russian\n- Max length: 45000 sybols"
+        }
+      },
+      "type": "@n8n/n8n-nodes-langchain.agent",
+      "typeVersion": 2.2,
+      "position": [
+        832,
+        464
+      ],
+      "id": "12e844d7-3ae2-4ffc-bff9-74fdbce892e1",
+      "name": "Shorts Script Writer",
+      "retryOnFail": true,
+      "maxTries": 5
+    },
+    {
+      "parameters": {
+        "jsonSchemaExample": "{\n    \"Название\": \"string\",\n    \"Скрипт\":  \"string\" ,\n    \"Описание\": \"string\"\n  }"
+      },
+      "type": "@n8n/n8n-nodes-langchain.outputParserStructured",
+      "typeVersion": 1.3,
+      "position": [
+        1184,
+        176
+      ],
+      "id": "4da8eff8-d043-467c-ad6f-d0b93c1ab357",
+      "name": "Structured Output Parser3"
+    },
+    {
+      "parameters": {
+        "promptType": "define",
+        "text": "=Script: {{ $json.transcripts[0].text }}",
+        "hasOutputParser": true,
+        "needsFallback": true,
+        "options": {
+          "systemMessage": "=### Role:\nYou are a social media marketer who creates Reels and Shorts for millions of views. Also you master at repurposing scripts for videos, making video scripts which are even more engaging, driving shares from viewers and impossible to skip.\n\n### Task:\nYou will repurpose and translate to Russian scripts provided for you, improving on it in areas where you deem it weak, but keeping the same tone and structure. \nMake new versions of scripts the most viral.\n\n### Instructions:\n1. Repurpose and translate to Russian the provided script keeping similar word counts, flow, and structure. At the beggining you need to send 3 best versions of hooks, that are impossible to skip\n2. If the script is empty or contains only a few words, write \"Reels без слов\" in the \"Скрипт\" section in output.\n2. Repurpose the provided caption, but without hashtags, keeping similar word counts, flow, and structure. \n3. Add name of the reel in 2-4 words - what is the reel about\n\n### Example of output \n\n{\n  \"Название\": \"Искусственный интеллект в действии\",\n  \"Скрипт\": \"- Хук 1: Заберёт ли AI твою работу?\\n- Хук 2: Основатель NVIDIA предупреждает…\\n- Хук 3: 50 % работы за вас!\\n\\n Просто послушайте слова основателя…\",\n  \"Описание\": \"Как AI‑агенты за 24 ч снимают 80 % рутины.\"\n}\n\n• Return **ONLY** valid JSON that matches the schema above.  \n• Use real line breaks (`\\n`) and double breaks (`\\n\\n`) for абзацы — don't output `\\\\n`. \n• Do not add any other keys, comments, or text.\n\n\n### Constraints:\n- Don't overuse exclamation marks in scripts.\n- Always output in Russian\nМаксимальное количество символов: 40000."
+        }
+      },
+      "type": "@n8n/n8n-nodes-langchain.agent",
+      "typeVersion": 2.2,
+      "position": [
+        928,
+        -48
+      ],
+      "id": "828031da-cd79-46fa-953a-17e95e76f9af",
+      "name": "Reels Script Writer"
+    },
+    {
+      "parameters": {
+        "jsonSchemaExample": "{\n    \"Название\": \"string\",\n    \"Скрипт\":  \"string\" ,\n    \"Описание\": \"string\"\n  }"
+      },
+      "type": "@n8n/n8n-nodes-langchain.outputParserStructured",
+      "typeVersion": 1.3,
+      "position": [
+        1552,
+        1248
+      ],
+      "id": "b715e731-7a86-4d54-b305-dafddac46cf8",
+      "name": "Structured Output Parser"
+    },
+    {
+      "parameters": {
+        "url": "https://api.scrapecreators.com/v2/tiktok/video",
+        "authentication": "genericCredentialType",
+        "genericAuthType": "httpHeaderAuth",
+        "sendQuery": true,
+        "queryParameters": {
+          "parameters": [
+            {
+              "name": "url",
+              "value": "={{ $json['Ссылка на ролик'] }}"
+            },
+            {
+              "name": "trim",
+              "value": "true"
+            },
+            {
+              "name": "get_transcript",
+              "value": "true"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [
+        448,
+        1040
+      ],
+      "id": "6aaa9ead-a9d1-4628-81f5-0fc51cb8a6f7",
+      "name": "Get TikTok Video Details",
+      "credentials": {
+        "httpHeaderAuth": {
+          "id": "YtUjqWQ8rBp7G7xs",
+          "name": "Scraper"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "operation": "appendOrUpdate",
+        "documentId": {
+          "__rl": true,
+          "value": "1eNPg9bhl3fLL-WIioNJYrIPI_Tn9GRz-zvJQCZyrb4k",
+          "mode": "list",
+          "cachedResultName": " КОНТЕНТ ЗАВОД Рабочий",
+          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/1eNPg9bhl3fLL-WIioNJYrIPI_Tn9GRz-zvJQCZyrb4k/edit?usp=drivesdk"
+        },
+        "sheetName": {
+          "__rl": true,
+          "value": 129910060,
+          "mode": "list",
+          "cachedResultName": "Скрипты 2",
+          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/1eNPg9bhl3fLL-WIioNJYrIPI_Tn9GRz-zvJQCZyrb4k/edit#gid=129910060"
+        },
+        "columns": {
+          "mappingMode": "defineBelow",
+          "value": {
+            "Дата": "={{ $now.format('dd.MM.yy HH:mm') }}",
+            "Название": "={{ $json.output['Название'] }}",
+            "Скрипт": "={{ $json.output['Скрипт'] }}",
+            "Описание": "={{ $json.output['Описание'] }}",
+            "Статус": "Новый",
+            "Исходный скрипт": "={{ $('Get TikTok Video Details').item.json.transcript }}",
+            "Аккаунт": "={{ $('Найти TikTok в статусе Создать скрипт').item.json['Аккаунт'] }}",
+            "ID поста": "={{ (Date.now().toString(36) + Math.random().toString(36).substring(2, 8)).substring(0,12) }}",
+            "Источник": "=TikTok",
+            "Ссылка на исходное видео": "={{ $('Найти TikTok в статусе Создать скрипт').item.json['Ссылка на ролик'] }}"
+          },
+          "matchingColumns": [
+            "Ссылка на исходное видео"
+          ],
+          "schema": [
+            {
+              "id": "Дата",
+              "displayName": "Дата",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "Источник",
+              "displayName": "Источник",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": false
+            },
+            {
+              "id": "Название",
+              "displayName": "Название",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "Скрипт",
+              "displayName": "Скрипт",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "Описание",
+              "displayName": "Описание",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "Статус",
+              "displayName": "Статус",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "Исходный скрипт",
+              "displayName": "Исходный скрипт",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "Ссылка на исходное видео",
+              "displayName": "Ссылка на исходное видео",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": false
+            },
+            {
+              "id": "Аккаунт",
+              "displayName": "Аккаунт",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "ID поста",
+              "displayName": "ID поста",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": false
+            },
+            {
+              "id": "ФОТО ДЛЯ СКРИПТА",
+              "displayName": "ФОТО ДЛЯ СКРИПТА",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": false
+            }
+          ],
+          "attemptToConvertTypes": false,
+          "convertFieldsToString": false
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.googleSheets",
+      "typeVersion": 4.7,
+      "position": [
+        1728,
+        1024
+      ],
+      "id": "227b53f9-e644-44dc-8da2-2e263f7e17ab",
+      "name": "Записать готовый скрипт2",
+      "credentials": {
+        "googleSheetsOAuth2Api": {
+          "id": "hn1lXHkzKd50EsOG",
+          "name": "Google Sheets account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "operation": "update",
+        "documentId": {
+          "__rl": true,
+          "value": "1eNPg9bhl3fLL-WIioNJYrIPI_Tn9GRz-zvJQCZyrb4k",
+          "mode": "list",
+          "cachedResultName": " КОНТЕНТ ЗАВОД Рабочий",
+          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/1eNPg9bhl3fLL-WIioNJYrIPI_Tn9GRz-zvJQCZyrb4k/edit?usp=drivesdk"
+        },
+        "sheetName": {
+          "__rl": true,
+          "value": 326059641,
+          "mode": "list",
+          "cachedResultName": "TikTok",
+          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/1eNPg9bhl3fLL-WIioNJYrIPI_Tn9GRz-zvJQCZyrb4k/edit#gid=326059641"
+        },
+        "columns": {
+          "mappingMode": "defineBelow",
+          "value": {
+            "Статус": "Скрипт готов",
+            "row_number": "={{ $('Найти TikTok в статусе Создать скрипт').item.json.row_number }}"
+          },
+          "matchingColumns": [
+            "row_number"
+          ],
+          "schema": [
+            {
+              "id": "Тип поста",
+              "displayName": "Тип поста",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": true
+            },
+            {
+              "id": "Аккаунт",
+              "displayName": "Аккаунт",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": true
+            },
+            {
+              "id": "Описание",
+              "displayName": "Описание",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": true
+            },
+            {
+              "id": "Ссылка на ролик",
+              "displayName": "Ссылка на ролик",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": true
+            },
+            {
+              "id": "Статус",
+              "displayName": "Статус",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "Подписчики",
+              "displayName": "Подписчики",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": true
+            },
+            {
+              "id": "Вовлеченность",
+              "displayName": "Вовлеченность",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": true
+            },
+            {
+              "id": "Просмотры",
+              "displayName": "Просмотры",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": true
+            },
+            {
+              "id": "Лайки",
+              "displayName": "Лайки",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": true
+            },
+            {
+              "id": "Комментарии",
+              "displayName": "Комментарии",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": true
+            },
+            {
+              "id": "Репосты",
+              "displayName": "Репосты",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": true
+            },
+            {
+              "id": "Сохранения",
+              "displayName": "Сохранения",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": true
+            },
+            {
+              "id": "Длительность",
+              "displayName": "Длительность",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": true
+            },
+            {
+              "id": "Дата записи",
+              "displayName": "Дата записи",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": true
+            },
+            {
+              "id": "Дата поста",
+              "displayName": "Дата поста",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": true
+            },
+            {
+              "id": "Ссылка на видео (временная)",
+              "displayName": "Ссылка на видео (временная)",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": true
+            },
+            {
+              "id": "ID поста",
+              "displayName": "ID поста",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": true
+            },
+            {
+              "id": "ID аккаунта",
+              "displayName": "ID аккаунта",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": true
+            },
+            {
+              "id": "row_number",
+              "displayName": "row_number",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "number",
+              "canBeUsedToMatch": true,
+              "readOnly": true,
+              "removed": false
+            }
+          ],
+          "attemptToConvertTypes": false,
+          "convertFieldsToString": false
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.googleSheets",
+      "typeVersion": 4.7,
+      "position": [
+        1952,
+        1024
+      ],
+      "id": "9a778ad7-56bf-44ad-b661-b6612ac25b69",
+      "name": "Изменить статус в таблице Reels2",
+      "credentials": {
+        "googleSheetsOAuth2Api": {
+          "id": "hn1lXHkzKd50EsOG",
+          "name": "Google Sheets account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "options": {
+            "caseSensitive": true,
+            "leftValue": "",
+            "typeValidation": "strict",
+            "version": 2
+          },
+          "conditions": [
+            {
+              "id": "1ce90307-b484-4edd-93fc-0067edd354f8",
+              "leftValue": "={{ $json.transcript }}",
+              "rightValue": "=null",
+              "operator": {
+                "type": "string",
+                "operation": "notEmpty",
+                "singleValue": true
+              }
+            }
+          ],
+          "combinator": "and"
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 2.2,
+      "position": [
+        656,
+        1040
+      ],
+      "id": "90b4a876-c663-402b-9c1e-94b8704f6ccb",
+      "name": "If"
+    },
+    {
+      "parameters": {
+        "resource": "audio",
+        "modelId": {
+          "__rl": true,
+          "value": "models/gemini-2.5-flash",
+          "mode": "list",
+          "cachedResultName": "models/gemini-2.5-flash"
+        },
+        "inputType": "binary",
+        "options": {}
+      },
+      "type": "@n8n/n8n-nodes-langchain.googleGemini",
+      "typeVersion": 1,
+      "position": [
+        1152,
+        1168
+      ],
+      "id": "67efa7ae-c2e5-4a10-b23d-ba96593373e2",
+      "name": "Transcribe a recording",
+      "credentials": {
+        "googlePalmApi": {
+          "id": "ImMK7DXaTOjk9GzA",
+          "name": "Google Gemini(PaLM) Api account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "content": "## TikTok",
+        "height": 704,
+        "width": 1952,
+        "color": 7
+      },
+      "type": "n8n-nodes-base.stickyNote",
+      "position": [
+        176,
+        912
+      ],
+      "typeVersion": 1,
+      "id": "e5a882bd-cdea-4ae4-8c82-7c8a807b7848",
+      "name": "Sticky Note"
+    },
+    {
+      "parameters": {
+        "content": "## YouTube",
+        "height": 496,
+        "width": 1712,
+        "color": 3
+      },
+      "type": "n8n-nodes-base.stickyNote",
+      "position": [
+        176,
+        368
+      ],
+      "typeVersion": 1,
+      "id": "ffce47fb-2cdf-4a8f-9c50-2a03e1b192a8",
+      "name": "Sticky Note1"
+    },
+    {
+      "parameters": {
+        "content": "## Instagram",
+        "height": 512,
+        "width": 1568,
+        "color": 6
+      },
+      "type": "n8n-nodes-base.stickyNote",
+      "position": [
+        176,
+        -176
+      ],
+      "typeVersion": 1,
+      "id": "c599862b-4e89-493c-a3ce-2b0323973ba0",
+      "name": "Sticky Note2"
+    },
+    {
+      "parameters": {
+        "promptType": "define",
+        "text": "=Script: {{ $('Get TikTok Video Details').item.json.transcript || $('Transcribe a recording').item.json.content?.parts?.[0]?.text || '' }}",
+        "hasOutputParser": true,
+        "needsFallback": true,
+        "options": {
+          "systemMessage": "=### Role:\nYou are a social media marketer who creates Reels and Shorts for millions of views. Also you master at repurposing scripts for videos, making video scripts which are even more engaging, driving shares from viewers and impossible to skip.\n\n### Task:\nYou will repurpose scripts provided for you, improving on it in areas where you deem it weak, but keeping the same tone and structure. \nMake new versions of scripts the most viral.\n\n### Instructions:\n1. Repurpose and translate to Russian the provided script keeping similar word counts, flow, and structure, but try to make script even more viral. At the beggining you need to send 3 best versions of hooks, that are impossible to skip\n2. If the script is empty or contains only a few words, write \"Reels без слов\" in the \"Скрипт\" section in output.\n2. Repurpose the provided caption, but without hashtags, keeping similar word counts, flow, and structure. \n3. Add name of the reel in 2-4 words - what is the reel about\n\n### Example of output \n\n{\n  \"Название\": \"Искусственный интеллект в действии\",\n  \"Скрипт\": \"- Хук 1: Заберёт ли AI твою работу?\\n- Хук 2: Основатель NVIDIA предупреждает…\\n- Хук 3: 50 % работы за вас!\\n\\n Просто послушайте слова основателя…\",\n  \"Описание\": \"Как AI‑агенты за 24 ч снимают 80 % рутины.\"\n}\n\n• Return **ONLY** valid JSON that matches the schema above.  \n• Use real line breaks (`\\n`) and double breaks (`\\n\\n`) for абзацы — don't output `\\\\n`. \n• Do not add any other keys, comments, or text.\n\n\n### Constraints:\n- Don't overuse exclamation marks in scripts.\n- Always output in Russian\nМаксимальное количество символов: 40000."
+        }
+      },
+      "type": "@n8n/n8n-nodes-langchain.agent",
+      "typeVersion": 2.2,
+      "position": [
+        1328,
+        1024
+      ],
+      "id": "8458ccba-c11e-4c4c-b88c-e8fa7733d046",
+      "name": "TikTok Script Writer"
+    },
+    {
+      "parameters": {
+        "url": "https://api.scrapecreators.com/v2/instagram/media/transcript",
+        "authentication": "genericCredentialType",
+        "genericAuthType": "httpHeaderAuth",
+        "sendQuery": true,
+        "queryParameters": {
+          "parameters": [
+            {
+              "name": "url",
+              "value": "={{ $json['Ссылка на ролик'] }}"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [
+        672,
+        -48
+      ],
+      "id": "d834d0b4-57b5-454e-a7e4-6c0d8cbbd101",
+      "name": "Get Instagram Transcript1",
+      "credentials": {
+        "httpHeaderAuth": {
+          "id": "YtUjqWQ8rBp7G7xs",
+          "name": "Scraper"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "content": "## LLM",
+        "height": 288,
+        "width": 544
+      },
+      "type": "n8n-nodes-base.stickyNote",
+      "position": [
+        896,
+        1760
+      ],
+      "typeVersion": 1,
+      "id": "c92b9dc8-a503-4dd8-b074-dfeaea2d83a0",
+      "name": "Sticky Note4"
+    },
+    {
+      "parameters": {
+        "model": {
+          "__rl": true,
+          "value": "gpt-5",
+          "mode": "list",
+          "cachedResultName": "gpt-5"
+        },
+        "options": {
+          "responseFormat": "text",
+          "timeout": 120000
+        }
+      },
+      "type": "@n8n/n8n-nodes-langchain.lmChatOpenAi",
+      "typeVersion": 1.2,
+      "position": [
+        960,
+        1872
+      ],
+      "id": "44afaabc-6444-4609-ad4a-bcac06aed79a",
+      "name": "OpenAI Chat Model",
+      "credentials": {
+        "openAiApi": {
+          "id": "BBRQaZuz2NatsfX4",
+          "name": "OpenAi account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "modelName": "models/gemini-2.5-pro",
+        "options": {}
+      },
+      "type": "@n8n/n8n-nodes-langchain.lmChatGoogleGemini",
+      "typeVersion": 1,
+      "position": [
+        1136,
+        1872
+      ],
+      "id": "f6f2853f-59c2-4e11-ad85-c7bb7f7b6e06",
+      "name": "Google Gemini Chat Model1",
+      "credentials": {
+        "googlePalmApi": {
+          "id": "ImMK7DXaTOjk9GzA",
+          "name": "Google Gemini(PaLM) Api account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "model": {
+          "__rl": true,
+          "value": "claude-sonnet-4-5-20250929",
+          "mode": "list",
+          "cachedResultName": "Claude Sonnet 4.5"
+        },
+        "options": {}
+      },
+      "type": "@n8n/n8n-nodes-langchain.lmChatAnthropic",
+      "typeVersion": 1.3,
+      "position": [
+        1312,
+        1872
+      ],
+      "id": "66120a73-5229-4523-99f4-1dc110d0d095",
+      "name": "Anthropic Chat Model",
+      "disabled": true
+    },
+    {
+      "parameters": {},
+      "type": "n8n-nodes-base.manualTrigger",
+      "typeVersion": 1,
+      "position": [
+        -144,
+        1024
+      ],
+      "id": "70a63f6b-cbbd-44fe-a2f9-b45c4d8ddb91",
+      "name": "When clicking ‘Execute workflow’",
+      "disabled": true
+    },
+    {
+      "parameters": {},
+      "type": "n8n-nodes-base.noOp",
+      "typeVersion": 1,
+      "position": [
+        1024,
+        1392
+      ],
+      "id": "61170ebf-22dd-4d9c-a38f-20ec50f2cf0a",
+      "name": "No Operation, do nothing"
+    }
+  ],
+  "pinData": {
+    "From Telegram": [
+      {
+        "json": {
+          "update_id": 507602007,
+          "message": {
+            "message_id": 28,
+            "from": {
+              "id": 941296693,
+              "is_bot": false,
+              "first_name": "Alexander",
+              "username": "a_trshncv",
+              "language_code": "ru"
+            },
+            "chat": {
+              "id": 941296693,
+              "first_name": "Alexander",
+              "username": "a_trshncv",
+              "type": "private"
+            },
+            "date": 1765281602,
+            "text": "/script",
+            "entities": [
+              {
+                "offset": 0,
+                "length": 7,
+                "type": "bot_command"
+              }
+            ]
+          }
+        }
+      }
+    ]
+  },
+  "connections": {
+    "Изменить статус в таблице Reels": {
+      "main": [
+        [
+          {
+            "node": "Уведомление о завершении",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Скачать видео": {
+      "main": [
+        [
+          {
+            "node": "Transcribe a recording",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "No Operation, do nothing",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "From Telegram": {
+      "main": [
+        [
+          {
+            "node": "Уведомление о запуске",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Записать готовый скрипт": {
+      "main": [
+        [
+          {
+            "node": "Изменить статус в таблице Reels",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Уведомление о запуске": {
+      "main": [
+        [
+          {
+            "node": "Найти YouTube в статусе Создать скрипт",
+            "type": "main",
+            "index": 0
+          },
+          {
+            "node": "Найти Insta в статусе Создать скрипт",
+            "type": "main",
+            "index": 0
+          },
+          {
+            "node": "Найти TikTok в статусе Создать скрипт",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Get Youtube Transcript": {
+      "main": [
+        [
+          {
+            "node": "Shorts Script Writer",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Найти YouTube в статусе Создать скрипт": {
+      "main": [
+        [
+          {
+            "node": "Get Youtube Transcript",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Найти Insta в статусе Создать скрипт": {
+      "main": [
+        [
+          {
+            "node": "Get Instagram Transcript1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Записать готовый скрипт1": {
+      "main": [
+        [
+          {
+            "node": "Изменить статус в таблице Reels1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Изменить статус в таблице Reels1": {
+      "main": [
+        [
+          {
+            "node": "Уведомление о завершении",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Structured Output Parser2": {
+      "ai_outputParser": [
+        [
+          {
+            "node": "Shorts Script Writer",
+            "type": "ai_outputParser",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Structured Output Parser3": {
+      "ai_outputParser": [
+        [
+          {
+            "node": "Reels Script Writer",
+            "type": "ai_outputParser",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Reels Script Writer": {
+      "main": [
+        [
+          {
+            "node": "Записать готовый скрипт1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Structured Output Parser": {
+      "ai_outputParser": [
+        [
+          {
+            "node": "TikTok Script Writer",
+            "type": "ai_outputParser",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Найти TikTok в статусе Создать скрипт": {
+      "main": [
+        [
+          {
+            "node": "Get TikTok Video Details",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Get TikTok Video Details": {
+      "main": [
+        [
+          {
+            "node": "If",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Shorts Script Writer": {
+      "main": [
+        [
+          {
+            "node": "Записать готовый скрипт",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Записать готовый скрипт2": {
+      "main": [
+        [
+          {
+            "node": "Изменить статус в таблице Reels2",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Изменить статус в таблице Reels2": {
+      "main": [
+        [
+          {
+            "node": "Уведомление о завершении",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "If": {
+      "main": [
+        [
+          {
+            "node": "TikTok Script Writer",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Скачать видео",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Transcribe a recording": {
+      "main": [
+        [
+          {
+            "node": "TikTok Script Writer",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "TikTok Script Writer": {
+      "main": [
+        [
+          {
+            "node": "Записать готовый скрипт2",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Get Instagram Transcript1": {
+      "main": [
+        [
+          {
+            "node": "Reels Script Writer",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "OpenAI Chat Model": {
+      "ai_languageModel": [
+        [
+          {
+            "node": "Shorts Script Writer",
+            "type": "ai_languageModel",
+            "index": 0
+          },
+          {
+            "node": "Reels Script Writer",
+            "type": "ai_languageModel",
+            "index": 0
+          },
+          {
+            "node": "TikTok Script Writer",
+            "type": "ai_languageModel",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Google Gemini Chat Model1": {
+      "ai_languageModel": [
+        [
+          {
+            "node": "Shorts Script Writer",
+            "type": "ai_languageModel",
+            "index": 1
+          },
+          {
+            "node": "Reels Script Writer",
+            "type": "ai_languageModel",
+            "index": 1
+          },
+          {
+            "node": "TikTok Script Writer",
+            "type": "ai_languageModel",
+            "index": 1
+          }
+        ]
+      ]
+    },
+    "When clicking ‘Execute workflow’": {
+      "main": [
+        [
+          {
+            "node": "Найти TikTok в статусе Создать скрипт",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "active": true,
+  "settings": {
+    "executionOrder": "v1",
+    "timeSavedMode": "fixed",
+    "callerPolicy": "workflowsFromSameOwner",
+    "availableInMCP": false,
+    "errorWorkflow": "au1WYFQsmA640kbV"
+  },
+  "versionId": "77ce04ac-7184-47cb-89bb-dcec4466ae8a",
+  "meta": {
+    "instanceId": "e3a0c0af2ed37cd599d6a73fe80407b580a5a35904a20f87f9fa5d6073de8e7a"
+  },
+  "id": "INqrq2ROvT9wghPH",
+  "tags": []
+}
