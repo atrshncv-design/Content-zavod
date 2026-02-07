@@ -1,0 +1,586 @@
+{
+  "name": "Создание скриптов из YouTube видео по ссылке",
+  "nodes": [
+    {
+      "parameters": {
+        "documentId": {
+          "__rl": true,
+          "value": "[скрыто]",
+          "mode": "list",
+          "cachedResultName": " КОНТЕНТ ЗАВОД Рабочий"
+        },
+        "sheetName": {
+          "__rl": true,
+          "value": 761280384,
+          "mode": "list",
+          "cachedResultName": "Запросы"
+        },
+        "filtersUI": {
+          "values": [
+            {
+              "lookupColumn": "Статус",
+              "lookupValue": "Запустить"
+            },
+            {
+              "lookupColumn": "Платформа",
+              "lookupValue": "YouTube"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.googleSheets",
+      "typeVersion": 4.7,
+      "position": [816, 176],
+      "id": "07bfdfc7-856b-4c69-839d-acf2b5500cd2",
+      "name": "Поиск по запросу",
+      "credentials": {
+        "googleSheetsOAuth2Api": {
+          "id": "[скрыто]",
+          "name": "Google Sheets account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "url": "https://api.scrapecreators.com/v1/youtube/video/transcript",
+        "authentication": "genericCredentialType",
+        "genericAuthType": "httpHeaderAuth",
+        "sendQuery": true,
+        "queryParameters": {
+          "parameters": [
+            {
+              "name": "url",
+              "value": "={{ $json['Запрос'] }}"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [1312, 160],
+      "id": "5f70f543-3380-4249-9efa-c6e081072641",
+      "name": "Get YouTube Transcript",
+      "credentials": {
+        "httpHeaderAuth": {
+          "id": "[скрыто]",
+          "name": "Scraper"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "promptType": "define",
+        "text": "={{ $json.transcript_only_text }}",
+        "hasOutputParser": true,
+        "needsFallback": true,
+        "options": {
+          "systemMessage": "=## Role:\nYou are a professional viral video scriptwriter and storytelling expert.\nYour job is to turn long YouTube videos — usually expert, educational, or podcast-style — into viral short-form scripts for Instagram Reels and YouTube Shorts that can get millions of views.\n\n---\n\n## Task\n\nAnalyze the full transcript below and extract the most powerful ideas, insights, or emotional moments that could resonate with a wide audience.\n\nBased on those, create **3–5 short viral scripts**, depending on:\n- the **length and richness** of the source video, and \n- the **number of truly strong and unique ideas** worth turning into standalone Shorts. \n*(If the video contains fewer strong insights, generate fewer but more impactful scripts.)*\n\nEach script must:\n- Start with a **powerful hook** — something shocking, intriguing, or emotionally engaging. \n- Be written in a **natural, conversational tone**, as if the speaker is talking **directly to the camera**. \n- Include **emotional contrasts, surprising twists, or mini-stories** that keep attention until the end. \n- End with a **punchy, memorable closing line** — something that makes viewers think, comment, or share. \n- Be **understandable and engaging** even for a general audience (not just experts). \n- Be written **entirely in Russian**. \n\n---\n\n## Output (strict)\nReturn **only valid JSON** in this exact format.\nNo extra text, explanations, or markdown outside the JSON block.\n\n**Structure (up to 5 scripts):**\n```json\n{\n \"script-N\": {\n \"title\": \"string (3-7 words, Russian)\",\n \"text\": \"string (75-150 words, Russian, 30-60 sec read time)\",\n \"caption\": \"string (1-2 sentences, Russian, engaging question or statement)\"\n }\n}\n```\n\n**Requirements:**\n- `title`: Short, catchy identifier only\n- `text`: Full script with strong hook and punchy ending. No timestamps, scene descriptions, or meta-comments\n- `caption`: Engaging post description that encourages interaction (curiosity, discussion, reflection)"
+        }
+      },
+      "type": "@n8n/n8n-nodes-langchain.agent",
+      "typeVersion": 2.2,
+      "position": [1520, 160],
+      "id": "eccc90f8-e3fd-4e35-95c2-2041c6852cc2",
+      "name": "AI Agent",
+      "onError": "continueErrorOutput"
+    },
+    {
+      "parameters": {
+        "model": {
+          "__rl": true,
+          "value": "gpt-5",
+          "mode": "list",
+          "cachedResultName": "gpt-5"
+        },
+        "options": {
+          "timeout": 60000
+        }
+      },
+      "type": "@n8n/n8n-nodes-langchain.lmChatOpenAi",
+      "typeVersion": 1.2,
+      "position": [1376, 496],
+      "id": "930fbfc0-aee2-4d08-bf3b-d64d3b36b69a",
+      "name": "OpenAI Chat Model",
+      "credentials": {
+        "openAiApi": {
+          "id": "[скрыто]",
+          "name": "OpenAi account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "jsonSchemaExample": "{\n \"script-1\": {\n \"title\": \"string\",\n \"text\": \"string\",\n \"caption\": \"string\"\n },\n \"script-2\": {\n \"title\": \"string\",\n \"text\": \"string\",\n \"caption\": \"string\"\n },\n \"script-3\": {\n \"title\": \"string\",\n \"text\": \"string\",\n \"caption\": \"string\"\n }\n}\n"
+      },
+      "type": "@n8n/n8n-nodes-langchain.outputParserStructured",
+      "typeVersion": 1.3,
+      "position": [1696, 368],
+      "id": "02b1c005-c4be-4fb9-a505-60340afa8f2a",
+      "name": "Structured Output Parser"
+    },
+    {
+      "parameters": {
+        "fieldToSplitOut": "output",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.splitOut",
+      "typeVersion": 1,
+      "position": [1872, 144],
+      "id": "f4b4f99e-84d2-4cf6-ae62-387736b82437",
+      "name": "Split Out"
+    },
+    {
+      "parameters": {
+        "operation": "append",
+        "documentId": {
+          "__rl": true,
+          "value": "[скрыто]",
+          "mode": "list",
+          "cachedResultName": " КОНТЕНТ ЗАВОД Рабочий"
+        },
+        "sheetName": {
+          "__rl": true,
+          "value": 923856445,
+          "mode": "list",
+          "cachedResultName": "Скрипты"
+        },
+        "columns": {
+          "mappingMode": "defineBelow",
+          "value": {
+            "Скрипт": "={{ $json.text }}",
+            "Источник": "YouTube Video",
+            "Название": "={{ $json.title }}",
+            "Дата": "={{ $now.format('dd.MM.yy HH:mm') }}",
+            "Статус": "Новый",
+            "Ссылка на исходное видео": "={{ $('Поиск по запросу').item.json['Запрос'] }}",
+            "ID поста": "={{ (Date.now().toString(36) + Math.random().toString(36).substring(2, 8)).substring(0,12) }}",
+            "Описание": "={{ $json.caption }}"
+          },
+          "matchingColumns": [],
+          "schema": [
+            {
+              "id": "Дата",
+              "displayName": "Дата",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "Источник",
+              "displayName": "Источник",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "Название",
+              "displayName": "Название",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "Скрипт",
+              "displayName": "Скрипт",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "Описание",
+              "displayName": "Описание",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "Статус",
+              "displayName": "Статус",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "Исходный скрипт",
+              "displayName": "Исходный скрипт",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": true
+            },
+            {
+              "id": "Ссылка на исходное видео",
+              "displayName": "Ссылка на исходное видео",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "ID поста",
+              "displayName": "ID поста",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.googleSheets",
+      "typeVersion": 4.7,
+      "position": [2080, 144],
+      "id": "dd026d11-a438-405d-8385-55a51a670ecd",
+      "name": "Записать скрипты",
+      "credentials": {
+        "googleSheetsOAuth2Api": {
+          "id": "[скрыто]",
+          "name": "Google Sheets account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "operation": "update",
+        "documentId": {
+          "__rl": true,
+          "value": "[скрыто]",
+          "mode": "list",
+          "cachedResultName": " КОНТЕНТ ЗАВОД Рабочий"
+        },
+        "sheetName": {
+          "__rl": true,
+          "value": 761280384,
+          "mode": "list",
+          "cachedResultName": "Запросы"
+        },
+        "columns": {
+          "mappingMode": "defineBelow",
+          "value": {
+            "row_number": "={{ $('Поиск по запросу').item.json.row_number }}",
+            "Статус": "Готово"
+          },
+          "matchingColumns": [
+            "row_number"
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.googleSheets",
+      "typeVersion": 4.7,
+      "position": [2288, 144],
+      "id": "8b4f1459-bd39-4d46-8249-cc839341c4f4",
+      "name": "Статус Готово в Запросах",
+      "executeOnce": true,
+      "credentials": {
+        "googleSheetsOAuth2Api": {
+          "id": "[скрыто]",
+          "name": "Google Sheets account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "inputSource": "passthrough"
+      },
+      "type": "n8n-nodes-base.executeWorkflowTrigger",
+      "typeVersion": 1.1,
+      "position": [384, 176],
+      "id": "a360b081-cce3-4698-a0c5-8da6cfa5c526",
+      "name": "From Telegram"
+    },
+    {
+      "parameters": {
+        "chatId": "={{ $('From Telegram').item.json.message.chat.id }}",
+        "text": "Новые скрипты добавлены в таблицу✅",
+        "additionalFields": {
+          "appendAttribution": false
+        }
+      },
+      "type": "n8n-nodes-base.telegram",
+      "typeVersion": 1.2,
+      "position": [2496, 144],
+      "id": "a26e4ff1-de11-4119-ac46-df1f36b849ba",
+      "name": "Отправить сообщение",
+      "webhookId": "[скрыто]",
+      "executeOnce": true,
+      "credentials": {
+        "telegramApi": {
+          "id": "[скрыто]",
+          "name": "Telegram account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "chatId": "={{ $('From Telegram').item.json.message.chat.id }}",
+        "text": "❌Не удалось создать скрипты! Попробуйте снова.",
+        "additionalFields": {
+          "appendAttribution": false
+        }
+      },
+      "type": "n8n-nodes-base.telegram",
+      "typeVersion": 1.2,
+      "position": [1952, 448],
+      "id": "d7cd6298-ba29-4436-922d-e068ee7feaa0",
+      "name": "Отправить сообщение1",
+      "webhookId": "[скрыто]",
+      "executeOnce": true,
+      "credentials": {
+        "telegramApi": {
+          "id": "[скрыто]",
+          "name": "Telegram account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "options": {
+            "caseSensitive": true,
+            "leftValue": "",
+            "typeValidation": "strict",
+            "version": 2
+          },
+          "conditions": [
+            {
+              "leftValue": "={{ $json.row_number }}",
+              "rightValue": 5,
+              "operator": {
+                "type": "number",
+                "operation": "equals"
+              }
+            }
+          ],
+          "combinator": "and"
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 2.2,
+      "position": [1040, 176],
+      "id": "825e5a2b-5266-4526-99c8-a1557bc7f948",
+      "name": "If"
+    },
+    {
+      "parameters": {
+        "modelName": "models/gemini-2.5-pro",
+        "options": {}
+      },
+      "type": "@n8n/n8n-nodes-langchain.lmChatGoogleGemini",
+      "typeVersion": 1,
+      "position": [1552, 464],
+      "id": "847d92f5-5c76-4af2-b686-278d5799f31c",
+      "name": "Google Gemini Chat Model",
+      "credentials": {
+        "googlePalmApi": {
+          "id": "[скрыто]",
+          "name": "Google Gemini(PaLM) Api account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "chatId": "={{ $('From Telegram').item.json.message.chat.id }}",
+        "text": "Запускаю создание сценариев из YouTube видео...⏳",
+        "additionalFields": {
+          "appendAttribution": false
+        }
+      },
+      "type": "n8n-nodes-base.telegram",
+      "typeVersion": 1.2,
+      "position": [608, 176],
+      "id": "6cc3a1dc-d92d-4cba-864e-6f623ed40d6d",
+      "name": "Отправить сообщение2",
+      "webhookId": "[скрыто]",
+      "executeOnce": false,
+      "credentials": {
+        "telegramApi": {
+          "id": "[скрыто]",
+          "name": "Telegram account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "content": "## Создание скриптов из длинных YouTube видео",
+        "height": 944,
+        "width": 2544,
+        "color": 3
+      },
+      "type": "n8n-nodes-base.stickyNote",
+      "position": [288, -48],
+      "typeVersion": 1,
+      "id": "3b468c2a-8a72-442d-8b24-920c3fff0cce",
+      "name": "Sticky Note"
+    }
+  ],
+  "connections": {
+    "Поиск по запросу": {
+      "main": [
+        [
+          {
+            "node": "If",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Get YouTube Transcript": {
+      "main": [
+        [
+          {
+            "node": "AI Agent",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "AI Agent": {
+      "main": [
+        [
+          {
+            "node": "Split Out",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Отправить сообщение1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "OpenAI Chat Model": {
+      "ai_languageModel": [
+        [
+          {
+            "node": "AI Agent",
+            "type": "ai_languageModel",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Structured Output Parser": {
+      "ai_outputParser": [
+        [
+          {
+            "node": "AI Agent",
+            "type": "ai_outputParser",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Split Out": {
+      "main": [
+        [
+          {
+            "node": "Записать скрипты",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Записать скрипты": {
+      "main": [
+        [
+          {
+            "node": "Статус Готово в Запросах",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Статус Готово в Запросах": {
+      "main": [
+        [
+          {
+            "node": "Отправить сообщение",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "From Telegram": {
+      "main": [
+        [
+          {
+            "node": "Отправить сообщение2",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "If": {
+      "main": [
+        [
+          {
+            "node": "Get YouTube Transcript",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Google Gemini Chat Model": {
+      "ai_languageModel": [
+        [
+          {
+            "node": "AI Agent",
+            "type": "ai_languageModel",
+            "index": 1
+          }
+        ]
+      ]
+    },
+    "Отправить сообщение2": {
+      "main": [
+        [
+          {
+            "node": "Поиск по запросу",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "active": true,
+  "settings": {
+    "executionOrder": "v1"
+  },
+  "meta": {
+    "templateCredsSetupCompleted": true,
+    "instanceId": "[скрыто]"
+  }
+}
