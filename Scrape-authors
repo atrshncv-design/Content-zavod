@@ -1,0 +1,1952 @@
+{
+  "name": "СБОР РОЛИКОВ АВТОРОВ",
+  "nodes": [
+    {
+      "parameters": {
+        "url": "https://api.scrapecreators.com/v1/youtube/channel",
+        "authentication": "genericCredentialType",
+        "genericAuthType": "httpHeaderAuth",
+        "sendQuery": true,
+        "queryParameters": {
+          "parameters": [
+            {
+              "name": "url",
+              "value": "={{ $json['Ссылка'] }}"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [
+        96,
+        688
+      ],
+      "id": "84e22786-3490-42d2-b7a6-127bd5b03468",
+      "name": "Get YT Channel Details",
+      "retryOnFail": true,
+      "maxTries": 5,
+      "credentials": {
+        "httpHeaderAuth": {
+          "id": "YtUjqWQ8rBp7G7xs",
+          "name": "Scraper"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "url": "https://api.scrapecreators.com/v1/youtube/channel/shorts",
+        "authentication": "genericCredentialType",
+        "genericAuthType": "httpHeaderAuth",
+        "sendQuery": true,
+        "queryParameters": {
+          "parameters": [
+            {
+              "name": "channelId",
+              "value": "={{ $('Get YT Channel Details').item.json.channelId }}"
+            },
+            {
+              "name": "sort",
+              "value": "newest"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [
+        336,
+        688
+      ],
+      "id": "3d08e66b-fc5c-4901-ba55-3718480b9aba",
+      "name": "Channel Shorts",
+      "credentials": {
+        "httpHeaderAuth": {
+          "id": "YtUjqWQ8rBp7G7xs",
+          "name": "Scraper"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "fieldToSplitOut": "shorts",
+        "include": "allOtherFields",
+        "options": {
+          "destinationFieldName": ""
+        }
+      },
+      "type": "n8n-nodes-base.splitOut",
+      "typeVersion": 1,
+      "position": [
+        592,
+        688
+      ],
+      "id": "84433376-11fb-449d-9b9d-61bce6bb7c81",
+      "name": "Split Out14"
+    },
+    {
+      "parameters": {
+        "content": "## Сбор YouTube Shorts автора",
+        "height": 496,
+        "width": 1152,
+        "color": 3
+      },
+      "type": "n8n-nodes-base.stickyNote",
+      "position": [
+        0,
+        544
+      ],
+      "typeVersion": 1,
+      "id": "41772f4f-9ff3-48e1-98b3-760424e97b75",
+      "name": "Sticky Note"
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "b28f6979-3411-4600-b17a-9a3272074d9d",
+              "name": "views",
+              "value": "={{ $json.shorts.viewCountInt }}",
+              "type": "number"
+            },
+            {
+              "id": "5f185835-22aa-413a-99d3-e9fede980f1c",
+              "name": "followers",
+              "value": "={{ $('Get YT Channel Details').item.json.subscriberCount }}",
+              "type": "number"
+            }
+          ]
+        },
+        "includeOtherFields": true,
+        "options": {}
+      },
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.4,
+      "position": [
+        800,
+        688
+      ],
+      "id": "2ea5e920-3e7f-4a3c-a8d2-236355fb0bd3",
+      "name": "Set Views/Followers"
+    },
+    {
+      "parameters": {
+        "operation": "update",
+        "documentId": {
+          "__rl": true,
+          "value": "1eNPg9bhl3fLL-WIioNJYrIPI_Tn9GRz-zvJQCZyrb4k",
+          "mode": "list",
+          "cachedResultName": " КОНТЕНТ ЗАВОД Рабочий",
+          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/1eNPg9bhl3fLL-WIioNJYrIPI_Tn9GRz-zvJQCZyrb4k/edit?usp=drivesdk"
+        },
+        "sheetName": {
+          "__rl": true,
+          "value": 1827669967,
+          "mode": "list",
+          "cachedResultName": "Авторы",
+          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/1eNPg9bhl3fLL-WIioNJYrIPI_Tn9GRz-zvJQCZyrb4k/edit#gid=1827669967"
+        },
+        "columns": {
+          "mappingMode": "defineBelow",
+          "value": {
+            "Аккаунт": "={{ $('Get YT Channel Details').item.json.handle }}",
+            "Имя": "={{ $('Get YT Channel Details').item.json.name }}",
+            "Аватар": "={{ $('Get YT Channel Details').item.json.avatar?.image?.sources?.[0]?.url ? `=IMAGE(\"${$('Get YT Channel Details').item.json.avatar.image.sources[0].url}\")` : '' }}",
+            "Ссылка": "=https://www.youtube.com/channel/{{ $('Get YT Channel Details').item.json.channelId }}",
+            "Подписчики": "={{ $('Get YT Channel Details').item.json.subscriberCount }}",
+            "Число постов": "={{ $('Get YT Channel Details').item.json.videoCount }}",
+            "Статус": "Готов",
+            "Дата": "={{ $now.format(\"dd-MM-yyyy\") }}",
+            "ID аккаунта": "={{ $('Get YT Channel Details').item.json.channelId }}",
+            "row_number": "={{ $('Получить авторов').item.json.row_number }}"
+          },
+          "matchingColumns": [
+            "row_number"
+          ],
+          "schema": [
+            {
+              "id": "Аватар",
+              "displayName": "Аватар",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "Платформа",
+              "displayName": "Платформа",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": true
+            },
+            {
+              "id": "Аккаунт",
+              "displayName": "Аккаунт",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": false
+            },
+            {
+              "id": "Имя",
+              "displayName": "Имя",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "Ссылка",
+              "displayName": "Ссылка",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": false
+            },
+            {
+              "id": "Подписчики",
+              "displayName": "Подписчики",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "Число постов",
+              "displayName": "Число постов",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "Статус",
+              "displayName": "Статус",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "Дата",
+              "displayName": "Дата",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "ID аккаунта",
+              "displayName": "ID аккаунта",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "row_number",
+              "displayName": "row_number",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "number",
+              "canBeUsedToMatch": true,
+              "readOnly": true,
+              "removed": false
+            }
+          ],
+          "attemptToConvertTypes": false,
+          "convertFieldsToString": false
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.googleSheets",
+      "typeVersion": 4.7,
+      "position": [
+        592,
+        848
+      ],
+      "id": "52c7574c-af19-4327-8e9f-e161f9fc4419",
+      "name": "Статус автора - Готов",
+      "credentials": {
+        "googleSheetsOAuth2Api": {
+          "id": "hn1lXHkzKd50EsOG",
+          "name": "Google Sheets account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "rules": {
+          "values": [
+            {
+              "conditions": {
+                "options": {
+                  "caseSensitive": true,
+                  "leftValue": "",
+                  "typeValidation": "strict",
+                  "version": 2
+                },
+                "conditions": [
+                  {
+                    "leftValue": "={{ $json['Платформа'] }}",
+                    "rightValue": "Instagram",
+                    "operator": {
+                      "type": "string",
+                      "operation": "equals"
+                    },
+                    "id": "d34012d3-6646-40cf-9df7-56ed845e14ff"
+                  }
+                ],
+                "combinator": "and"
+              },
+              "renameOutput": true,
+              "outputKey": "Instagram"
+            },
+            {
+              "conditions": {
+                "options": {
+                  "caseSensitive": true,
+                  "leftValue": "",
+                  "typeValidation": "strict",
+                  "version": 2
+                },
+                "conditions": [
+                  {
+                    "id": "3dcb81cc-5f32-4b9a-a7ad-8935796d4ee0",
+                    "leftValue": "={{ $json['Платформа'] }}",
+                    "rightValue": "YouTube",
+                    "operator": {
+                      "type": "string",
+                      "operation": "equals",
+                      "name": "filter.operator.equals"
+                    }
+                  }
+                ],
+                "combinator": "and"
+              },
+              "renameOutput": true,
+              "outputKey": "YouTube"
+            },
+            {
+              "conditions": {
+                "options": {
+                  "caseSensitive": true,
+                  "leftValue": "",
+                  "typeValidation": "strict",
+                  "version": 2
+                },
+                "conditions": [
+                  {
+                    "id": "762bfc25-03f1-4e14-b2ec-a58becb1ae81",
+                    "leftValue": "={{ $json['Платформа'] }}",
+                    "rightValue": "TikTok",
+                    "operator": {
+                      "type": "string",
+                      "operation": "equals",
+                      "name": "filter.operator.equals"
+                    }
+                  }
+                ],
+                "combinator": "and"
+              },
+              "renameOutput": true,
+              "outputKey": "TikTok"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.switch",
+      "typeVersion": 3.3,
+      "position": [
+        -432,
+        672
+      ],
+      "id": "9ab534bc-5761-4718-985c-30767b2ec34b",
+      "name": "Switch"
+    },
+    {
+      "parameters": {
+        "content": "## Сбор Instagram Reels автора",
+        "height": 496,
+        "width": 1088
+      },
+      "type": "n8n-nodes-base.stickyNote",
+      "position": [
+        0,
+        0
+      ],
+      "typeVersion": 1,
+      "id": "453bbbe0-ea20-49f3-89c3-5adfd6803171",
+      "name": "Sticky Note1"
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "b28f6979-3411-4600-b17a-9a3272074d9d",
+              "name": "views",
+              "value": "={{ $json.media.play_count }}",
+              "type": "number"
+            },
+            {
+              "id": "5f185835-22aa-413a-99d3-e9fede980f1c",
+              "name": "followers",
+              "value": "={{ $('Get Insta Profile').item.json.data.user.edge_followed_by.count }}",
+              "type": "number"
+            }
+          ]
+        },
+        "includeOtherFields": true,
+        "options": {}
+      },
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.4,
+      "position": [
+        624,
+        128
+      ],
+      "id": "fa3ffc4d-23ce-4dd1-8c59-996a4defd024",
+      "name": "Set Views/Followers1"
+    },
+    {
+      "parameters": {
+        "operation": "appendOrUpdate",
+        "documentId": {
+          "__rl": true,
+          "value": "1eNPg9bhl3fLL-WIioNJYrIPI_Tn9GRz-zvJQCZyrb4k",
+          "mode": "list",
+          "cachedResultName": " КОНТЕНТ ЗАВОД Рабочий",
+          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/1eNPg9bhl3fLL-WIioNJYrIPI_Tn9GRz-zvJQCZyrb4k/edit?usp=drivesdk"
+        },
+        "sheetName": {
+          "__rl": true,
+          "value": 1407963696,
+          "mode": "list",
+          "cachedResultName": "Instagram",
+          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/1eNPg9bhl3fLL-WIioNJYrIPI_Tn9GRz-zvJQCZyrb4k/edit#gid=1407963696"
+        },
+        "columns": {
+          "mappingMode": "defineBelow",
+          "value": {
+            "ID поста": "={{ $json.media.caption.media_id }}",
+            "Тип поста": "Reels",
+            "Аккаунт": "={{ $json.media.caption.user.username }}",
+            "Описание": "={{ $json.media.caption.text }}",
+            "Статус": "Новый",
+            "Подписчики": "={{ $json.followers }}",
+            "Просмотры": "={{ $json.views }}",
+            "Вовлеченность": "={{ ($json.views/$json.followers*100).round(1) }}",
+            "Дата записи": "={{ new Date().toLocaleString('ru-RU') }}",
+            "Лайки": "={{ $json.media.like_count }}",
+            "Комментарии": "={{ $json.media.comment_count }}",
+            "Ссылка на ролик": "={{ $('Get Instagram Reels').item.json.media.url }}",
+            "Дата поста": "={{ new Date(Number($json.media.taken_at) * 1000).toLocaleString('ru-RU') }}"
+          },
+          "matchingColumns": [
+            "ID поста"
+          ],
+          "schema": [
+            {
+              "id": "Тип поста",
+              "displayName": "Тип поста",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "Аккаунт",
+              "displayName": "Аккаунт",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "Описание",
+              "displayName": "Описание",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "Ссылка на ролик",
+              "displayName": "Ссылка на ролик",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": false
+            },
+            {
+              "id": "Статус",
+              "displayName": "Статус",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "Подписчики",
+              "displayName": "Подписчики",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "Вовлеченность",
+              "displayName": "Вовлеченность",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "Просмотры",
+              "displayName": "Просмотры",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "Лайки",
+              "displayName": "Лайки",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": false
+            },
+            {
+              "id": "Комментарии",
+              "displayName": "Комментарии",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": false
+            },
+            {
+              "id": "Длительность",
+              "displayName": "Длительность",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": true
+            },
+            {
+              "id": "Дата поста",
+              "displayName": "Дата поста",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": false
+            },
+            {
+              "id": "Дата записи",
+              "displayName": "Дата записи",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "Ссылка на видео (временная)",
+              "displayName": "Ссылка на видео (временная)",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": true
+            },
+            {
+              "id": "ID поста",
+              "displayName": "ID поста",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": false
+            },
+            {
+              "id": "ID аккаунта",
+              "displayName": "ID аккаунта",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": true
+            }
+          ],
+          "attemptToConvertTypes": false,
+          "convertFieldsToString": false
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.googleSheets",
+      "typeVersion": 4.7,
+      "position": [
+        832,
+        128
+      ],
+      "id": "fe3a376d-5019-4ab3-8c0c-a429ef5bd63d",
+      "name": "Вставить в таблицу YouTube1",
+      "credentials": {
+        "googleSheetsOAuth2Api": {
+          "id": "hn1lXHkzKd50EsOG",
+          "name": "Google Sheets account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "operation": "update",
+        "documentId": {
+          "__rl": true,
+          "value": "1eNPg9bhl3fLL-WIioNJYrIPI_Tn9GRz-zvJQCZyrb4k",
+          "mode": "list",
+          "cachedResultName": " КОНТЕНТ ЗАВОД Рабочий",
+          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/1eNPg9bhl3fLL-WIioNJYrIPI_Tn9GRz-zvJQCZyrb4k/edit?usp=drivesdk"
+        },
+        "sheetName": {
+          "__rl": true,
+          "value": 1827669967,
+          "mode": "list",
+          "cachedResultName": "Авторы",
+          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/1eNPg9bhl3fLL-WIioNJYrIPI_Tn9GRz-zvJQCZyrb4k/edit#gid=1827669967"
+        },
+        "columns": {
+          "mappingMode": "defineBelow",
+          "value": {
+            "Аккаунт": "={{ $('Получить авторов').item.json['Аккаунт'] }}",
+            "Имя": "={{ $json.data.user.full_name }}",
+            "Аватар": "={{ $('Get Insta Profile').item.json.data.user.profile_pic_url ? `=IMAGE(\"${$('Get Insta Profile').item.json.data.user.profile_pic_url}\")` : '' }}",
+            "Ссылка": "=https://www.instagram.com/{{ $json.data.user.username }}",
+            "Подписчики": "={{ $json.data.user.edge_followed_by.count }}",
+            "Число постов": "={{ $json.data.user.edge_owner_to_timeline_media.count }}",
+            "Статус": "Готов",
+            "Дата": "={{ $now.format(\"dd-MM-yyyy\") }}",
+            "ID аккаунта": "={{ $json.data.user.id }}"
+          },
+          "matchingColumns": [
+            "Аккаунт"
+          ],
+          "schema": [
+            {
+              "id": "Аватар",
+              "displayName": "Аватар",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "Платформа",
+              "displayName": "Платформа",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": true
+            },
+            {
+              "id": "Аккаунт",
+              "displayName": "Аккаунт",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": false
+            },
+            {
+              "id": "Имя",
+              "displayName": "Имя",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "Ссылка",
+              "displayName": "Ссылка",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "Подписчики",
+              "displayName": "Подписчики",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "Число постов",
+              "displayName": "Число постов",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "Статус",
+              "displayName": "Статус",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "Дата",
+              "displayName": "Дата",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "ID аккаунта",
+              "displayName": "ID аккаунта",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "row_number",
+              "displayName": "row_number",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "number",
+              "canBeUsedToMatch": true,
+              "readOnly": true,
+              "removed": true
+            }
+          ],
+          "attemptToConvertTypes": false,
+          "convertFieldsToString": false
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.googleSheets",
+      "typeVersion": 4.7,
+      "position": [
+        384,
+        320
+      ],
+      "id": "d6089c93-d344-4dcd-9921-bb96c3444e04",
+      "name": "Статус автора - Готов1",
+      "credentials": {
+        "googleSheetsOAuth2Api": {
+          "id": "hn1lXHkzKd50EsOG",
+          "name": "Google Sheets account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "content": "## Сбор TikTok автора",
+        "height": 384,
+        "width": 1104,
+        "color": 7
+      },
+      "type": "n8n-nodes-base.stickyNote",
+      "position": [
+        16,
+        1136
+      ],
+      "typeVersion": 1,
+      "id": "e66735a0-a58e-4a00-911a-d2994da44478",
+      "name": "Sticky Note2"
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "b28f6979-3411-4600-b17a-9a3272074d9d",
+              "name": "views",
+              "value": "={{ $json.statistics.play_count }}",
+              "type": "number"
+            },
+            {
+              "id": "5f185835-22aa-413a-99d3-e9fede980f1c",
+              "name": "followers",
+              "value": "={{ $json.author.follower_count }}",
+              "type": "number"
+            }
+          ]
+        },
+        "includeOtherFields": true,
+        "options": {}
+      },
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.4,
+      "position": [
+        368,
+        1264
+      ],
+      "id": "b52afc81-37e3-46ac-a37e-08925b4a0d7a",
+      "name": "Set Views/Followers2"
+    },
+    {
+      "parameters": {
+        "operation": "update",
+        "documentId": {
+          "__rl": true,
+          "value": "1eNPg9bhl3fLL-WIioNJYrIPI_Tn9GRz-zvJQCZyrb4k",
+          "mode": "list",
+          "cachedResultName": " КОНТЕНТ ЗАВОД Рабочий",
+          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/1eNPg9bhl3fLL-WIioNJYrIPI_Tn9GRz-zvJQCZyrb4k/edit?usp=drivesdk"
+        },
+        "sheetName": {
+          "__rl": true,
+          "value": 1827669967,
+          "mode": "list",
+          "cachedResultName": "Авторы",
+          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/1eNPg9bhl3fLL-WIioNJYrIPI_Tn9GRz-zvJQCZyrb4k/edit#gid=1827669967"
+        },
+        "columns": {
+          "mappingMode": "defineBelow",
+          "value": {
+            "Аккаунт": "={{ $('Получить авторов').item.json['Аккаунт'] }}",
+            "Имя": "={{ $json.author.nickname }}",
+            "Аватар": "={{ $('Get TikTok Videos').item.json.author?.avatar_168x168?.url_list?.[0] \n   ? `=IMAGE(\"${$('Get TikTok Videos').item.json.author.avatar_168x168.url_list[0]}\")`\n   : '' }}",
+            "Ссылка": "=https://www.tiktok.com/@{{ $json.author.unique_id }}",
+            "Подписчики": "={{ $json.followers }}",
+            "Число постов": "={{ $json.author.aweme_count }}",
+            "Статус": "Готов",
+            "Дата": "={{ $now.format(\"dd-MM-yyyy\") }}",
+            "ID аккаунта": "={{ $json.author.uid }}"
+          },
+          "matchingColumns": [
+            "Аккаунт"
+          ],
+          "schema": [
+            {
+              "id": "Аватар",
+              "displayName": "Аватар",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "Платформа",
+              "displayName": "Платформа",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": true
+            },
+            {
+              "id": "Аккаунт",
+              "displayName": "Аккаунт",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": false
+            },
+            {
+              "id": "Имя",
+              "displayName": "Имя",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "Ссылка",
+              "displayName": "Ссылка",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "Подписчики",
+              "displayName": "Подписчики",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "Число постов",
+              "displayName": "Число постов",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "Статус",
+              "displayName": "Статус",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "Дата",
+              "displayName": "Дата",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "ID аккаунта",
+              "displayName": "ID аккаунта",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "row_number",
+              "displayName": "row_number",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "number",
+              "canBeUsedToMatch": true,
+              "readOnly": true,
+              "removed": true
+            }
+          ],
+          "attemptToConvertTypes": false,
+          "convertFieldsToString": false
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.googleSheets",
+      "typeVersion": 4.7,
+      "position": [
+        608,
+        1264
+      ],
+      "id": "1da7dc00-8f13-4bdd-849a-e6b8cddb92e5",
+      "name": "Статус автора - Готов2",
+      "credentials": {
+        "googleSheetsOAuth2Api": {
+          "id": "hn1lXHkzKd50EsOG",
+          "name": "Google Sheets account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "documentId": {
+          "__rl": true,
+          "value": "1eNPg9bhl3fLL-WIioNJYrIPI_Tn9GRz-zvJQCZyrb4k",
+          "mode": "list",
+          "cachedResultName": " КОНТЕНТ ЗАВОД Рабочий",
+          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/1eNPg9bhl3fLL-WIioNJYrIPI_Tn9GRz-zvJQCZyrb4k/edit?usp=drivesdk"
+        },
+        "sheetName": {
+          "__rl": true,
+          "value": 1827669967,
+          "mode": "list",
+          "cachedResultName": "Авторы",
+          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/1eNPg9bhl3fLL-WIioNJYrIPI_Tn9GRz-zvJQCZyrb4k/edit#gid=1827669967"
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.googleSheets",
+      "typeVersion": 4.7,
+      "position": [
+        -688,
+        688
+      ],
+      "id": "867e9a15-54f1-403a-99f4-dc1f8b6387cd",
+      "name": "Получить авторов",
+      "credentials": {
+        "googleSheetsOAuth2Api": {
+          "id": "hn1lXHkzKd50EsOG",
+          "name": "Google Sheets account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "e40a4f87-bddc-42ae-a21c-ca7bb671d6d3",
+              "name": "amount",
+              "value": 20,
+              "type": "number"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.4,
+      "position": [
+        -928,
+        688
+      ],
+      "id": "211e3648-21a9-468e-9985-e614617445d7",
+      "name": "Число постов"
+    },
+    {
+      "parameters": {
+        "url": "https://api.scrapecreators.com/v3/tiktok/profile-videos",
+        "authentication": "genericCredentialType",
+        "genericAuthType": "httpHeaderAuth",
+        "sendQuery": true,
+        "queryParameters": {
+          "parameters": [
+            {
+              "name": "handle",
+              "value": "={{ $('Получить авторов').item.json['Аккаунт'] }}"
+            },
+            {
+              "name": "amount",
+              "value": "={{ $('Число постов').item.json.amount }}"
+            },
+            {
+              "name": "trim",
+              "value": "true"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [
+        96,
+        1264
+      ],
+      "id": "0c4cf75d-8b2d-4acd-a989-81b16005fc3b",
+      "name": "Get TikTok Videos",
+      "credentials": {
+        "httpHeaderAuth": {
+          "id": "YtUjqWQ8rBp7G7xs",
+          "name": "Scraper"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "operation": "appendOrUpdate",
+        "documentId": {
+          "__rl": true,
+          "value": "1eNPg9bhl3fLL-WIioNJYrIPI_Tn9GRz-zvJQCZyrb4k",
+          "mode": "list",
+          "cachedResultName": " КОНТЕНТ ЗАВОД Рабочий",
+          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/1eNPg9bhl3fLL-WIioNJYrIPI_Tn9GRz-zvJQCZyrb4k/edit?usp=drivesdk"
+        },
+        "sheetName": {
+          "__rl": true,
+          "value": 326059641,
+          "mode": "list",
+          "cachedResultName": "TikTok",
+          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/1eNPg9bhl3fLL-WIioNJYrIPI_Tn9GRz-zvJQCZyrb4k/edit#gid=326059641"
+        },
+        "columns": {
+          "mappingMode": "defineBelow",
+          "value": {
+            "ID поста": "={{ $('Set Views/Followers2').item.json.aweme_id }}",
+            "Тип поста": "TikTok",
+            "Аккаунт": "={{ $('Получить авторов').item.json['Аккаунт'] }}",
+            "Описание": "={{ $('Set Views/Followers2').item.json.desc }}",
+            "Статус": "Новый",
+            "Подписчики": "={{ $('Set Views/Followers2').item.json.author.follower_count }}",
+            "Просмотры": "={{ $('Set Views/Followers2').item.json.statistics.play_count }}",
+            "Вовлеченность": "={{ ( ($('Set Views/Followers2').item.json.views / $('Set Views/Followers2').item.json.followers) * 100 ).round(1) }}",
+            "Дата записи": "={{ new Date().toLocaleString('ru-RU') }}",
+            "Лайки": "={{ $('Set Views/Followers2').item.json.statistics.digg_count }}",
+            "Комментарии": "={{ $('Set Views/Followers2').item.json.statistics.comment_count }}",
+            "Ссылка на ролик": "={{ $('Set Views/Followers2').item.json.url }}",
+            "Длительность": "={{ ($('Set Views/Followers2').item.json.video.duration/1000).round() }}",
+            "Сохранения": "={{ $('Set Views/Followers2').item.json.statistics.collect_count }}",
+            "Репосты": "={{ $('Set Views/Followers2').item.json.statistics.share_count }}",
+            "Дата поста": "={{ $('Set Views/Followers2').item.json.create_time_utc }}"
+          },
+          "matchingColumns": [
+            "ID поста"
+          ],
+          "schema": [
+            {
+              "id": "Тип поста",
+              "displayName": "Тип поста",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "Аккаунт",
+              "displayName": "Аккаунт",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "Описание",
+              "displayName": "Описание",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "Ссылка на ролик",
+              "displayName": "Ссылка на ролик",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": false
+            },
+            {
+              "id": "Статус",
+              "displayName": "Статус",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "Подписчики",
+              "displayName": "Подписчики",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "Вовлеченность",
+              "displayName": "Вовлеченность",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "Просмотры",
+              "displayName": "Просмотры",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "Лайки",
+              "displayName": "Лайки",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": false
+            },
+            {
+              "id": "Комментарии",
+              "displayName": "Комментарии",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": false
+            },
+            {
+              "id": "Репосты",
+              "displayName": "Репосты",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": false
+            },
+            {
+              "id": "Сохранения",
+              "displayName": "Сохранения",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": false
+            },
+            {
+              "id": "Длительность",
+              "displayName": "Длительность",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": false
+            },
+            {
+              "id": "Дата записи",
+              "displayName": "Дата записи",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "Дата поста",
+              "displayName": "Дата поста",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": false
+            },
+            {
+              "id": "Ссылка на видео (временная)",
+              "displayName": "Ссылка на видео (временная)",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": true
+            },
+            {
+              "id": "ID поста",
+              "displayName": "ID поста",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": false
+            },
+            {
+              "id": "ID аккаунта",
+              "displayName": "ID аккаунта",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": true
+            }
+          ],
+          "attemptToConvertTypes": false,
+          "convertFieldsToString": false
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.googleSheets",
+      "typeVersion": 4.7,
+      "position": [
+        880,
+        1264
+      ],
+      "id": "d894cb50-8110-4697-bec6-784c1387abce",
+      "name": "Вставить в таблицу TikTok",
+      "credentials": {
+        "googleSheetsOAuth2Api": {
+          "id": "hn1lXHkzKd50EsOG",
+          "name": "Google Sheets account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "url": "https://api.scrapecreators.com/v1/instagram/profile",
+        "authentication": "genericCredentialType",
+        "genericAuthType": "httpHeaderAuth",
+        "sendQuery": true,
+        "queryParameters": {
+          "parameters": [
+            {
+              "name": "handle",
+              "value": "={{ $json['Аккаунт'] }}"
+            },
+            {
+              "name": "trim",
+              "value": "true"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [
+        96,
+        128
+      ],
+      "id": "c086ac0d-fc53-48ef-857f-5cd32652d675",
+      "name": "Get Insta Profile",
+      "credentials": {
+        "httpHeaderAuth": {
+          "id": "YtUjqWQ8rBp7G7xs",
+          "name": "Scraper"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "url": "https://api.scrapecreators.com/v1/instagram/user/reels/simple",
+        "authentication": "genericCredentialType",
+        "genericAuthType": "httpHeaderAuth",
+        "sendQuery": true,
+        "queryParameters": {
+          "parameters": [
+            {
+              "name": "user_id",
+              "value": "={{ $json.data.user.id }}"
+            },
+            {
+              "name": "amount",
+              "value": "={{ $('Число постов').item.json.amount }}"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [
+        384,
+        128
+      ],
+      "id": "2ad40f2b-aeab-4607-abf9-a4d72932e872",
+      "name": "Get Instagram Reels",
+      "credentials": {
+        "httpHeaderAuth": {
+          "id": "YtUjqWQ8rBp7G7xs",
+          "name": "Scraper"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "chatId": "={{ $('From Telegram').item.json.message.chat.id }}",
+        "text": "Ролики собраны и добавлены в таблицу✅",
+        "additionalFields": {
+          "appendAttribution": false
+        }
+      },
+      "type": "n8n-nodes-base.telegram",
+      "typeVersion": 1.2,
+      "position": [
+        1456,
+        688
+      ],
+      "id": "4f840b8c-b00d-4fe2-9eab-ae1a2a7e41a8",
+      "name": "Отправить сообщение",
+      "webhookId": "f1ff3ee7-3ddb-49d0-8c3c-3afdfc370d71",
+      "executeOnce": true,
+      "credentials": {
+        "telegramApi": {
+          "id": "iVXsUnIYVKpnKKMQ",
+          "name": "Telegram account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "inputSource": "passthrough"
+      },
+      "type": "n8n-nodes-base.executeWorkflowTrigger",
+      "typeVersion": 1.1,
+      "position": [
+        -1408,
+        688
+      ],
+      "id": "1b27fb9d-55f1-49a2-83b3-ba67de4238f9",
+      "name": "From Telegram"
+    },
+    {
+      "parameters": {
+        "chatId": "={{ $('From Telegram').item.json.message.chat.id }}",
+        "text": "Начинаю сбор роликов...⏳",
+        "additionalFields": {
+          "appendAttribution": false
+        }
+      },
+      "type": "n8n-nodes-base.telegram",
+      "typeVersion": 1.2,
+      "position": [
+        -1168,
+        688
+      ],
+      "id": "be2fff70-48ab-4a96-a73b-52d108737e38",
+      "name": "Отправить сообщение1",
+      "webhookId": "f1ff3ee7-3ddb-49d0-8c3c-3afdfc370d71",
+      "executeOnce": true,
+      "credentials": {
+        "telegramApi": {
+          "id": "iVXsUnIYVKpnKKMQ",
+          "name": "Telegram account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "operation": "appendOrUpdate",
+        "documentId": {
+          "__rl": true,
+          "value": "1eNPg9bhl3fLL-WIioNJYrIPI_Tn9GRz-zvJQCZyrb4k",
+          "mode": "list",
+          "cachedResultName": " КОНТЕНТ ЗАВОД Рабочий",
+          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/1eNPg9bhl3fLL-WIioNJYrIPI_Tn9GRz-zvJQCZyrb4k/edit?usp=drivesdk"
+        },
+        "sheetName": {
+          "__rl": true,
+          "value": 751580016,
+          "mode": "list",
+          "cachedResultName": "ЮТУБ 2",
+          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/1eNPg9bhl3fLL-WIioNJYrIPI_Tn9GRz-zvJQCZyrb4k/edit#gid=751580016"
+        },
+        "columns": {
+          "mappingMode": "defineBelow",
+          "value": {
+            "ID поста": "={{ $json.shorts.id }}",
+            "Тип поста": "Shorts",
+            "Аккаунт": "={{ $('Get YT Channel Details').item.json.handle.replace(/^@/, '') }}",
+            "Статус": "Новый",
+            "Подписчики": "={{ $json.followers }}",
+            "Просмотры": "={{ $json.views }}",
+            "Вовлеченность": "={{ ($json.views/$json.followers*100).round(1) }}",
+            "Дата записи": "={{ new Date().toLocaleString('ru-RU') }}",
+            "Лайки": "={{ $json.shorts.likeCountInt }}",
+            "Комментарии": "={{ $json.shorts.commentCountInt }}",
+            "Ссылка на ролик": "={{ $('Split Out14').item.json.shorts.url }}",
+            "Название": "={{ $('Split Out14').item.json.shorts.title }}",
+            "Аватар": "==IMAGE(\"{{ $json.shorts.thumbnail }}\")"
+          },
+          "matchingColumns": [
+            "ID поста"
+          ],
+          "schema": [
+            {
+              "id": "Аватар",
+              "displayName": "Аватар",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": false
+            },
+            {
+              "id": "Тип поста",
+              "displayName": "Тип поста",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "Аккаунт",
+              "displayName": "Аккаунт",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "Название",
+              "displayName": "Название",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": false
+            },
+            {
+              "id": "Ссылка на ролик",
+              "displayName": "Ссылка на ролик",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": false
+            },
+            {
+              "id": "Статус",
+              "displayName": "Статус",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "Вовлеченность",
+              "displayName": "Вовлеченность",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "Просмотры",
+              "displayName": "Просмотры",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "Лайки",
+              "displayName": "Лайки",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": false
+            },
+            {
+              "id": "Комментарии",
+              "displayName": "Комментарии",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": false
+            },
+            {
+              "id": "Подписчики",
+              "displayName": "Подписчики",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "Дата записи",
+              "displayName": "Дата записи",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "Дата поста",
+              "displayName": "Дата поста",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": true
+            },
+            {
+              "id": "Ссылка на видео (временная)",
+              "displayName": "Ссылка на видео (временная)",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": true
+            },
+            {
+              "id": "ID поста",
+              "displayName": "ID поста",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": false
+            },
+            {
+              "id": "ID аккаунта",
+              "displayName": "ID аккаунта",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": true
+            }
+          ],
+          "attemptToConvertTypes": false,
+          "convertFieldsToString": false
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.googleSheets",
+      "typeVersion": 4.7,
+      "position": [
+        1104,
+        688
+      ],
+      "id": "3c6dc077-8696-4e6b-a7f8-f461444d7199",
+      "name": "Вставить в таблицу YouTube",
+      "credentials": {
+        "googleSheetsOAuth2Api": {
+          "id": "hn1lXHkzKd50EsOG",
+          "name": "Google Sheets account"
+        }
+      }
+    }
+  ],
+  "pinData": {
+    "From Telegram": [
+      {
+        "json": {
+          "update_id": 507602000,
+          "message": {
+            "message_id": 10,
+            "from": {
+              "id": 941296693,
+              "is_bot": false,
+              "first_name": "Alexander",
+              "username": "a_trshncv",
+              "language_code": "ru"
+            },
+            "chat": {
+              "id": 941296693,
+              "first_name": "Alexander",
+              "username": "a_trshncv",
+              "type": "private"
+            },
+            "date": 1765215492,
+            "text": "/scrape",
+            "entities": [
+              {
+                "offset": 0,
+                "length": 7,
+                "type": "bot_command"
+              }
+            ]
+          }
+        }
+      }
+    ]
+  },
+  "connections": {
+    "Get YT Channel Details": {
+      "main": [
+        [
+          {
+            "node": "Channel Shorts",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Channel Shorts": {
+      "main": [
+        [
+          {
+            "node": "Split Out14",
+            "type": "main",
+            "index": 0
+          },
+          {
+            "node": "Статус автора - Готов",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Split Out14": {
+      "main": [
+        [
+          {
+            "node": "Set Views/Followers",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Set Views/Followers": {
+      "main": [
+        [
+          {
+            "node": "Вставить в таблицу YouTube",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Switch": {
+      "main": [
+        [
+          {
+            "node": "Get Insta Profile",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Get YT Channel Details",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Get TikTok Videos",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Set Views/Followers1": {
+      "main": [
+        [
+          {
+            "node": "Вставить в таблицу YouTube1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Set Views/Followers2": {
+      "main": [
+        [
+          {
+            "node": "Статус автора - Готов2",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Получить авторов": {
+      "main": [
+        [
+          {
+            "node": "Switch",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Число постов": {
+      "main": [
+        [
+          {
+            "node": "Получить авторов",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Get TikTok Videos": {
+      "main": [
+        [
+          {
+            "node": "Set Views/Followers2",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Статус автора - Готов2": {
+      "main": [
+        [
+          {
+            "node": "Вставить в таблицу TikTok",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Get Insta Profile": {
+      "main": [
+        [
+          {
+            "node": "Статус автора - Готов1",
+            "type": "main",
+            "index": 0
+          },
+          {
+            "node": "Get Instagram Reels",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Get Instagram Reels": {
+      "main": [
+        [
+          {
+            "node": "Set Views/Followers1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Вставить в таблицу YouTube1": {
+      "main": [
+        [
+          {
+            "node": "Отправить сообщение",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Вставить в таблицу TikTok": {
+      "main": [
+        [
+          {
+            "node": "Отправить сообщение",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "From Telegram": {
+      "main": [
+        [
+          {
+            "node": "Отправить сообщение1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Отправить сообщение1": {
+      "main": [
+        [
+          {
+            "node": "Число постов",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Вставить в таблицу YouTube": {
+      "main": [
+        [
+          {
+            "node": "Отправить сообщение",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "active": true,
+  "settings": {
+    "executionOrder": "v1",
+    "timeSavedMode": "fixed",
+    "callerPolicy": "workflowsFromSameOwner",
+    "availableInMCP": false,
+    "errorWorkflow": "au1WYFQsmA640kbV"
+  },
+  "versionId": "3d01091f-ba35-4cd1-830b-5262720ff367",
+  "meta": {
+    "templateCredsSetupCompleted": true,
+    "instanceId": "e3a0c0af2ed37cd599d6a73fe80407b580a5a35904a20f87f9fa5d6073de8e7a"
+  },
+  "id": "AKABp1QsYLWHhmpT",
+  "tags": []
+}
