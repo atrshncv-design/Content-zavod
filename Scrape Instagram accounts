@@ -1,0 +1,458 @@
+{
+  "nodes": [
+    {
+      "parameters": {
+        "fieldToSplitOut": "data.user.edge_related_profiles.edges",
+        "include": "allOtherFields",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.splitOut",
+      "typeVersion": 1,
+      "position": [1776, 0],
+      "id": "052884f9-d9a8-47f2-a398-10f703222742",
+      "name": "Split Out"
+    },
+    {
+      "parameters": {
+        "content": "## Поиск похожих аккаунтов Instagram",
+        "height": 720,
+        "width": 2560,
+        "color": 5
+      },
+      "type": "n8n-nodes-base.stickyNote",
+      "typeVersion": 1,
+      "position": [128, -176],
+      "id": "a07c1e4a-01ff-4754-88a7-8c03fcdf91e0",
+      "name": "Sticky Note"
+    },
+    {
+      "parameters": {
+        "inputSource": "passthrough"
+      },
+      "type": "n8n-nodes-base.executeWorkflowTrigger",
+      "typeVersion": 1.1,
+      "position": [208, 16],
+      "id": "02e28ee4-359a-414d-b1b0-81a728234453",
+      "name": "From Telegram"
+    },
+    {
+      "parameters": {
+        "chatId": "={{ $('From Telegram').item.json.message.chat.id }}",
+        "text": "Похожие авторы добавлены в таблицу ✅ ",
+        "additionalFields": {
+          "appendAttribution": false
+        }
+      },
+      "type": "n8n-nodes-base.telegram",
+      "typeVersion": 1.2,
+      "position": [2496, 0],
+      "id": "9ed58b55-0625-4401-b530-733e0d98487c",
+      "name": "Send a text message",
+      "webhookId": "[скрыто]",
+      "executeOnce": true,
+      "credentials": {
+        "telegramApi": {
+          "id": "[скрыто]",
+          "name": "Telegram account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "chatId": "=[скрыто]",
+        "text": "Ищу похожих авторов...⏳ ",
+        "additionalFields": {
+          "appendAttribution": false
+        }
+      },
+      "type": "n8n-nodes-base.telegram",
+      "typeVersion": 1.2,
+      "position": [448, 16],
+      "id": "71e450d3-c4f9-484f-9602-419cd041c2a1",
+      "name": "Уведомление о запуске",
+      "webhookId": "[скрыто]",
+      "executeOnce": false,
+      "credentials": {
+        "telegramApi": {
+          "id": "[скрыто]",
+          "name": "Telegram account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "maxItems": 30
+      },
+      "type": "n8n-nodes-base.limit",
+      "typeVersion": 1,
+      "position": [2000, 0],
+      "id": "7675bf9a-4020-4e70-98d4-36797ac6c8bc",
+      "name": "Число похожих аккаунтов"
+    },
+    {
+      "parameters": {
+        "documentId": {
+          "__rl": true,
+          "value": "[скрыто]",
+          "mode": "list",
+          "cachedResultName": " КОНТЕНТ ЗАВОД Рабочий"
+        },
+        "sheetName": {
+          "__rl": true,
+          "value": 1827669967,
+          "mode": "list",
+          "cachedResultName": "Авторы"
+        },
+        "filtersUI": {
+          "values": [
+            {
+              "lookupColumn": "Статус",
+              "lookupValue": "Найти похожие Instagram"
+            },
+            {
+              "lookupColumn": "Платформа",
+              "lookupValue": "Instagram"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.googleSheets",
+      "typeVersion": 4.7,
+      "position": [720, 16],
+      "id": "a9f2fbee-4b36-4434-91f0-b3fb691e7eac",
+      "name": "Авторы в статусе Найти Похожих",
+      "credentials": {
+        "googleSheetsOAuth2Api": {
+          "id": "[скрыто]",
+          "name": "Google Sheets account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "url": "https://api.scrapecreators.com/v1/instagram/profile",
+        "authentication": "genericCredentialType",
+        "genericAuthType": "httpHeaderAuth",
+        "sendQuery": true,
+        "queryParameters": {
+          "parameters": [
+            {
+              "name": "handle",
+              "value": "={{ $json['Аккаунт'] }}"
+            },
+            {
+              "name": "trim",
+              "value": "true"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [1232, 0],
+      "id": "2332c527-6b75-41ab-9964-60dd412c0178",
+      "name": "Get Insta Profile1",
+      "credentials": {
+        "httpHeaderAuth": {
+          "id": "[скрыто]",
+          "name": "Scraper"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "operation": "appendOrUpdate",
+        "documentId": {
+          "__rl": true,
+          "value": "[скрыто]",
+          "mode": "list",
+          "cachedResultName": " КОНТЕНТ ЗАВОД Рабочий"
+        },
+        "sheetName": {
+          "__rl": true,
+          "value": 1827669967,
+          "mode": "list",
+          "cachedResultName": "Авторы"
+        },
+        "columns": {
+          "mappingMode": "defineBelow",
+          "value": {
+            "ID аккаунта": "={{ $json['data.user.edge_related_profiles.edges'].node.id }}",
+            "Аккаунт": "={{ $json['data.user.edge_related_profiles.edges'].node.username }}",
+            "Имя": "={{ $json['data.user.edge_related_profiles.edges'].node.full_name }}",
+            "Ссылка": "=https://www.instagram.com/{{ $json['data.user.edge_related_profiles.edges'].node.username }}",
+            "Дата": "={{ $now.format(\"dd.MM.yy\") }}",
+            "Статус": "Новый",
+            "Аватар": "={{ $json['data.user.edge_related_profiles.edges'].node.profile_pic_url ? '=IMAGE(\"' + $json['data.user.edge_related_profiles.edges'].node.profile_pic_url + '\")' : '' }}",
+            "Платформа": "Instagram"
+          },
+          "matchingColumns": [
+            "ID аккаунта"
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.googleSheets",
+      "typeVersion": 4.7,
+      "position": [2240, 0],
+      "id": "241f1e1c-44d4-4af3-bf22-1e1c01249ee2",
+      "name": "Записать авторов1",
+      "credentials": {
+        "googleSheetsOAuth2Api": {
+          "id": "[скрыто]",
+          "name": "Google Sheets account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "operation": "update",
+        "documentId": {
+          "__rl": true,
+          "value": "[скрыто]",
+          "mode": "list",
+          "cachedResultName": " КОНТЕНТ ЗАВОД Рабочий"
+        },
+        "sheetName": {
+          "__rl": true,
+          "value": 1827669967,
+          "mode": "list",
+          "cachedResultName": "Авторы"
+        },
+        "columns": {
+          "mappingMode": "defineBelow",
+          "value": {
+            "ID аккаунта": "={{ $json.data.user.id }}",
+            "Имя": "={{ $json.data.user.full_name }}",
+            "Ссылка": "=https://www.instagram.com/{{ $json.data.user.username }}",
+            "Подписчики": "={{ $json.data.user.edge_followed_by.count }}",
+            "Дата": "={{ $now.format(\"dd.MM.yy\") }}",
+            "Число постов": "={{ $json.data.user.edge_owner_to_timeline_media.count }}",
+            "Аватар": "==IMAGE(\"{{ $json.data.user.profile_pic_url }}\")",
+            "Статус": "Готов",
+            "row_number": "={{ $('Авторы в статусе Найти Похожих').item.json.row_number }}"
+          },
+          "matchingColumns": [
+            "row_number"
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.googleSheets",
+      "typeVersion": 4.7,
+      "position": [1488, 336],
+      "id": "19597c4d-4798-4c10-ade3-dc3506397781",
+      "name": "Статус Готово",
+      "credentials": {
+        "googleSheetsOAuth2Api": {
+          "id": "[скрыто]",
+          "name": "Google Sheets account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "options": {
+            "caseSensitive": true,
+            "leftValue": "",
+            "typeValidation": "strict",
+            "version": 2
+          },
+          "conditions": [
+            {
+              "leftValue": "={{ $json['Платформа'] }}",
+              "rightValue": "Instagram",
+              "operator": {
+                "type": "string",
+                "operation": "equals"
+              }
+            }
+          ],
+          "combinator": "and"
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 2.2,
+      "position": [944, 16],
+      "id": "aa8612ba-9591-4e2e-b6ad-5037062be755",
+      "name": "Проверка платформы"
+    },
+    {
+      "parameters": {
+        "chatId": "=[скрыто]",
+        "text": "Похожие авторы по этому аккаунту не найдены😐 Укажите другой аккаунт. ",
+        "additionalFields": {
+          "appendAttribution": false
+        }
+      },
+      "type": "n8n-nodes-base.telegram",
+      "typeVersion": 1.2,
+      "position": [1792, 224],
+      "id": "120d74f7-b419-4e20-baa3-e484b33a2483",
+      "name": "Send a text message1",
+      "webhookId": "[скрыто]",
+      "executeOnce": true,
+      "credentials": {
+        "telegramApi": {
+          "id": "[скрыто]",
+          "name": "Telegram account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "options": {
+            "caseSensitive": true,
+            "leftValue": "",
+            "typeValidation": "strict",
+            "version": 2
+          },
+          "conditions": [
+            {
+              "leftValue": "={{ $json.data.user.edge_related_profiles.edges }}",
+              "rightValue": "",
+              "operator": {
+                "type": "array",
+                "operation": "notEmpty",
+                "singleValue": true
+              }
+            }
+          ],
+          "combinator": "and"
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 2.2,
+      "position": [1488, 0],
+      "id": "ad950906-8fa2-472f-a35b-32df0720a457",
+      "name": "Есть ли похожие"
+    }
+  ],
+  "connections": {
+    "Split Out": {
+      "main": [
+        [
+          {
+            "node": "Число похожих аккаунтов",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "From Telegram": {
+      "main": [
+        [
+          {
+            "node": "Уведомление о запуске",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Уведомление о запуске": {
+      "main": [
+        [
+          {
+            "node": "Авторы в статусе Найти Похожих",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Число похожих аккаунтов": {
+      "main": [
+        [
+          {
+            "node": "Записать авторов1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Авторы в статусе Найти Похожих": {
+      "main": [
+        [
+          {
+            "node": "Проверка платформы",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Get Insta Profile1": {
+      "main": [
+        [
+          {
+            "node": "Статус Готово",
+            "type": "main",
+            "index": 0
+          },
+          {
+            "node": "Есть ли похожие",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Записать авторов1": {
+      "main": [
+        [
+          {
+            "node": "Send a text message",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Проверка платформы": {
+      "main": [
+        [
+          {
+            "node": "Get Insta Profile1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Есть ли похожие": {
+      "main": [
+        [
+          {
+            "node": "Split Out",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Send a text message1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "active": true,
+  "settings": {
+    "executionOrder": "v1"
+  },
+  "meta": {
+    "templateCredsSetupCompleted": true,
+    "instanceId": "[скрыто]"
+  }
+}
