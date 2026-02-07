@@ -1,0 +1,62 @@
+{
+  "nodes": [
+    {
+      "parameters": {},
+      "type": "n8n-nodes-base.errorTrigger",
+      "typeVersion": 1,
+      "position": [112, 144],
+      "id": "e3c453a8-2d0a-4f6e-9bb4-06a2e3cdc8f3",
+      "name": "Error Trigger"
+    },
+    {
+      "parameters": {
+        "chatId": "[скрыто]",
+        "text": "=*⚠️ Возникла ошибка в процессе*\n{{ $json.execution.error.message }}\n\nОписание:\n{{ $json.execution.error.description }}",
+        "additionalFields": {}
+      },
+      "type": "n8n-nodes-base.telegram",
+      "typeVersion": 1.2,
+      "position": [320, 144],
+      "id": "dd88f191-1b7b-488e-aba0-133a0c1d8d5b",
+      "name": "Уведомить об ошибке",
+      "webhookId": "[скрыто]",
+      "credentials": {
+        "telegramApi": {
+          "id": "[скрыто]",
+          "name": "Telegram account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "content": "## Уведомление об ошибках в Telegram",
+        "height": 384,
+        "width": 608,
+        "color": 3
+      },
+      "type": "n8n-nodes-base.stickyNote",
+      "position": [0, 0],
+      "typeVersion": 1,
+      "id": "bc6ef6b5-db2d-4f30-aa4c-ec45899a870c",
+      "name": "Sticky Note"
+    }
+  ],
+  "connections": {
+    "Error Trigger": {
+      "main": [
+        [
+          {
+            "node": "Уведомить об ошибке",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "pinData": {},
+  "meta": {
+    "templateCredsSetupCompleted": true,
+    "instanceId": "[скрыто]"
+  }
+}
