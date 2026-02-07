@@ -1,0 +1,710 @@
+{
+  "name": "6. Создать AI аватара",
+  "nodes": [
+    {
+      "parameters": {
+        "inputSource": "passthrough"
+      },
+      "type": "n8n-nodes-base.executeWorkflowTrigger",
+      "typeVersion": 1.1,
+      "position": [304, 240],
+      "id": "cd40c4e7-54fd-4ab1-b6a0-7a93b2165924",
+      "name": "From Telegram"
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "89819cf1-4d81-4c5c-9269-431e44852716",
+              "name": "API ключ",
+              "value": "[скрыто]",
+              "type": "string"
+            },
+            {
+              "id": "8ab7e6b6-7a09-4b04-9a7f-f7148b9a46d1",
+              "name": "ID аватара",
+              "value": "[скрыто]",
+              "type": "string"
+            },
+            {
+              "id": "503e1359-74b9-4fb2-b180-eb82c484a2d1",
+              "name": "ID голоса",
+              "value": "[скрыто]",
+              "type": "string"
+            },
+            {
+              "id": "39d61b65-bb1f-41dc-a61c-0d45337325ba",
+              "name": "Скрипт",
+              "value": "={{ $json['Скрипт'] }}",
+              "type": "string"
+            },
+            {
+              "id": "5495ff53-b0cd-4f4c-923f-89cbf30dad23",
+              "name": "Скорость голоса",
+              "value": 1.1,
+              "type": "number"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.4,
+      "position": [992, 208],
+      "id": "d31e638d-2948-4862-bf7e-6ef7224357ff",
+      "name": "Параметры аватара"
+    },
+    {
+      "parameters": {
+        "chatId": "={{ $('From Telegram').item.json.message.chat.id }}",
+        "text": "Запускаю создание AI Аватара....⏳",
+        "additionalFields": {
+          "appendAttribution": false
+        }
+      },
+      "type": "n8n-nodes-base.telegram",
+      "typeVersion": 1.2,
+      "position": [496, 208],
+      "id": "c18e388c-089d-4929-883e-c43f14286c89",
+      "name": "Уведомление о запуске",
+      "webhookId": "[скрыто]",
+      "executeOnce": true,
+      "credentials": {
+        "telegramApi": {
+          "id": "[скрыто]",
+          "name": "Telegram account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "content": "## Вставьте свои параметры из Heygen",
+        "color": 4
+      },
+      "type": "n8n-nodes-base.stickyNote",
+      "position": [912, 608],
+      "typeVersion": 1,
+      "id": "457b48e2-0c3a-4c46-9498-ab58bf3e6b71",
+      "name": "Sticky Note1"
+    },
+    {
+      "parameters": {
+        "documentId": {
+          "__rl": true,
+          "value": "[скрыто]",
+          "mode": "list",
+          "cachedResultName": " КОНТЕНТ ЗАВОД Рабочий",
+          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/[скрыто]/edit?usp=drivesdk"
+        },
+        "sheetName": {
+          "__rl": true,
+          "value": 923856445,
+          "mode": "list",
+          "cachedResultName": "Скрипты",
+          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/[скрыто]/edit#gid=923856445"
+        },
+        "filtersUI": {
+          "values": [
+            {
+              "lookupColumn": "Статус",
+              "lookupValue": "Создать AI Аватар"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.googleSheets",
+      "typeVersion": 4.7,
+      "position": [720, 208],
+      "id": "4fe038d7-18f2-4ddf-b219-000f22743ad0",
+      "name": "Взять ролики в статусе Создать AI Аватар",
+      "credentials": {
+        "googleSheetsOAuth2Api": {
+          "id": "[скрыто]",
+          "name": "Google Sheets account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "amount": 60
+      },
+      "type": "n8n-nodes-base.wait",
+      "typeVersion": 1.1,
+      "position": [1456, 208],
+      "id": "10e4d0a1-3d42-4160-9d25-355be0087cec",
+      "name": "Wait2",
+      "webhookId": "[скрыто]"
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "options": {
+            "caseSensitive": true,
+            "leftValue": "",
+            "typeValidation": "strict",
+            "version": 2
+          },
+          "conditions": [
+            {
+              "id": "781833f3-1c8d-4a46-8979-2f56537274f0",
+              "leftValue": "={{ $json.data.status }}",
+              "rightValue": "completed",
+              "operator": {
+                "type": "string",
+                "operation": "equals",
+                "name": "filter.operator.equals"
+              }
+            }
+          ],
+          "combinator": "and"
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 2.2,
+      "position": [1888, 208],
+      "id": "fe2fc4a9-38e8-4d42-ba48-bf3436e996fd",
+      "name": "If"
+    },
+    {
+      "parameters": {
+        "content": "## Создание AI аватара",
+        "height": 784,
+        "width": 2704,
+        "color": 6
+      },
+      "type": "n8n-nodes-base.stickyNote",
+      "position": [176, 0],
+      "typeVersion": 1,
+      "id": "23b22a1b-c216-4ef2-bf15-c18f21830c75",
+      "name": "Sticky Note2"
+    },
+    {
+      "parameters": {
+        "operation": "sendVideo",
+        "chatId": "={{ $('From Telegram').item.json.message.chat.id }}",
+        "binaryData": true,
+        "additionalFields": {}
+      },
+      "type": "n8n-nodes-base.telegram",
+      "typeVersion": 1.2,
+      "position": [2384, 192],
+      "id": "56b7c5cf-7a7b-4c06-a928-75b424c42a32",
+      "name": "Send a video",
+      "webhookId": "[скрыто]",
+      "credentials": {
+        "telegramApi": {
+          "id": "[скрыто]",
+          "name": "Telegram account"
+        }
+      },
+      "disabled": true
+    },
+    {
+      "parameters": {
+        "url": "=https://api.heygen.com/v1/video_status.get?video_id={{$node[\"Generate Avatar1\"].json.data.video_id}}",
+        "sendQuery": true,
+        "queryParameters": {
+          "parameters": [
+            {
+              "name": "video_id",
+              "value": "={{ $json.data.video_url }}"
+            }
+          ]
+        },
+        "sendHeaders": true,
+        "headerParameters": {
+          "parameters": [
+            {
+              "name": "accept",
+              "value": "application/json"
+            },
+            {
+              "name": "x-api-key",
+              "value": "={{ $('Параметры аватара').item.json['API ключ'] }}"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [1664, 208],
+      "id": "3d573f47-7f65-410b-9abb-bf2398a715ca",
+      "name": "Get AI video"
+    },
+    {
+      "parameters": {
+        "url": "={{ $json.data.video_url }}",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [2160, 208],
+      "id": "68c94b9b-b811-4255-8f28-ca75ba2a24a7",
+      "name": "Download video",
+      "retryOnFail": true,
+      "maxTries": 5
+    },
+    {
+      "parameters": {
+        "operation": "update",
+        "documentId": {
+          "__rl": true,
+          "value": "[скрыто]",
+          "mode": "list",
+          "cachedResultName": " КОНТЕНТ ЗАВОД Рабочий",
+          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/[скрыто]/edit?usp=drivesdk"
+        },
+        "sheetName": {
+          "__rl": true,
+          "value": 923856445,
+          "mode": "list",
+          "cachedResultName": "Скрипты",
+          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/[скрыто]/edit#gid=923856445"
+        },
+        "columns": {
+          "mappingMode": "defineBelow",
+          "value": {
+            "ID поста": "={{ $('Взять ролики в статусе Создать AI Аватар').item.json['ID поста'] }}",
+            "Статус": "Создан AI Аватар",
+            "Ссылка на видео": "={{ $json.data.video_url }}"
+          },
+          "matchingColumns": [
+            "ID поста"
+          ],
+          "schema": [
+            {
+              "id": "Дата",
+              "displayName": "Дата",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": true
+            },
+            {
+              "id": "Источник",
+              "displayName": "Источник",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": true
+            },
+            {
+              "id": "Название",
+              "displayName": "Название",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": true
+            },
+            {
+              "id": "Скрипт",
+              "displayName": "Скрипт",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": true
+            },
+            {
+              "id": "Описание",
+              "displayName": "Описание",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": true
+            },
+            {
+              "id": "Статус",
+              "displayName": "Статус",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "Исходный скрипт",
+              "displayName": "Исходный скрипт",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": true
+            },
+            {
+              "id": "Ссылка на исходное видео",
+              "displayName": "Ссылка на исходное видео",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": true
+            },
+            {
+              "id": "ID поста",
+              "displayName": "ID поста",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "Ссылка на видео",
+              "displayName": "Ссылка на видео",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.googleSheets",
+      "typeVersion": 4.7,
+      "position": [2160, 368],
+      "id": "b8c3e3a2-6a9d-4e07-8b80-0f7e0d3a5e6d",
+      "name": "Обновить статус в таблице",
+      "credentials": {
+        "googleSheetsOAuth2Api": {
+          "id": "[скрыто]",
+          "name": "Google Sheets account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "method": "POST",
+        "url": "https://api.heygen.com/v2/video/generate",
+        "sendHeaders": true,
+        "headerParameters": {
+          "parameters": [
+            {
+              "name": "accept",
+              "value": "application/json"
+            },
+            {
+              "name": "x-api-key",
+              "value": "={{ $('Параметры аватара').item.json['API ключ'] }}"
+            }
+          ]
+        },
+        "sendBody": true,
+        "specifyBody": "json",
+        "jsonBody": "={\n  \"video_inputs\": [\n    {\n      \"character\": {\n        \"type\": \"avatar\",\n        \"avatar_id\": \"{{ $json['ID аватара'] }}\",\n        \"avatar_style\": \"normal\"\n      },\n      \"voice\": {\n        \"type\": \"text\",\n        \"input_text\": {{ JSON.stringify($json['Скрипт']) }},\n        \"voice_id\": \"{{ $json['ID голоса'] }}\",\n        \"speed\": {{ $json['Скорость голоса'] }}\n      }\n    }\n  ],\n  \"dimension\": {\n    \"width\": 720,\n    \"height\": 1280\n  }\n}",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [1216, 208],
+      "id": "ae37a0f2-75f6-4edf-8cb0-0d5b11c42021",
+      "name": "Generate Avatar1"
+    },
+    {
+      "parameters": {
+        "name": "=[Exported]-{{ $json.body.title }}",
+        "driveId": {
+          "__rl": true,
+          "mode": "list",
+          "value": "My Drive"
+        },
+        "folderId": {
+          "__rl": true,
+          "value": "[скрыто]",
+          "mode": "list",
+          "cachedResultName": "ВИДЕО ИСХОДНИКИ НА МОНТАЖ",
+          "cachedResultUrl": "https://drive.google.com/drive/folders/[скрыто]"
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.googleDrive",
+      "typeVersion": 3,
+      "position": [2384, 32],
+      "id": "7a6db6fd-524d-4843-bea7-03f283fdb44e",
+      "name": "Upload file",
+      "credentials": {
+        "googleDriveOAuth2Api": {
+          "id": "[скрыто]",
+          "name": "Google Drive account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "89819cf1-4d81-4c5c-9269-431e44852716",
+              "name": "API ключ",
+              "value": "[скрыто]",
+              "type": "string"
+            },
+            {
+              "id": "8ab7e6b6-7a09-4b04-9a7f-f7148b9a46d1",
+              "name": "ID аватара",
+              "value": "[скрыто]",
+              "type": "string"
+            },
+            {
+              "id": "503e1359-74b9-4fb2-b180-eb82c484a2d1",
+              "name": "ID голоса",
+              "value": "[скрыто]",
+              "type": "string"
+            },
+            {
+              "id": "39d61b65-bb1f-41dc-a61c-0d45337325ba",
+              "name": "Скрипт",
+              "value": "={{ $json['Скрипт'] }}",
+              "type": "string"
+            },
+            {
+              "id": "5495ff53-b0cd-4f4c-923f-89cbf30dad23",
+              "name": "Скорость голоса",
+              "value": 1.1,
+              "type": "number"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.4,
+      "position": [912, 464],
+      "id": "48ebf0ca-fb1e-4d3f-910f-0c26f618e03e",
+      "name": "Параметры аватара2"
+    },
+    {
+      "parameters": {
+        "method": "POST",
+        "url": "https://api.heygen.com/v2/video/generate",
+        "sendHeaders": true,
+        "headerParameters": {
+          "parameters": [
+            {
+              "name": "accept",
+              "value": "application/json"
+            },
+            {
+              "name": "x-api-key",
+              "value": "={{ $json['API ключ'] }}"
+            }
+          ]
+        },
+        "sendBody": true,
+        "specifyBody": "json",
+        "jsonBody": "={\n  \"video_inputs\": [\n    {\n      \"character\": {\n        \"type\": \"avatar\",\n        \"avatar_id\": \"{{ $json['ID аватара'] }}\",\n        \"avatar_style\": \"normal\"\n      },\n      \"voice\": {\n        \"type\": \"text\",\n        \"input_text\": {{ JSON.stringify($json['Скрипт']) }},\n        \"voice_id\": \"{{ $json['ID голоса'] }}\",\n        \"speed\": {{ $json['Скорость голоса'] }}\n      }\n    }\n  ],\n  \"dimension\": {\n    \"width\": 720,\n    \"height\": 1280\n  }\n}",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [1200, 480],
+      "id": "235b95d0-2e66-42d2-8839-20ad370ea1a1",
+      "name": "Generate Avatar2"
+    },
+    {
+      "parameters": {
+        "url": "https://api.heygen.com/v1/video_status.get",
+        "sendQuery": true,
+        "queryParameters": {
+          "parameters": [
+            {
+              "name": "video_id",
+              "value": "={{ $('Generate Avatar2').item.json.data.video_id }}"
+            }
+          ]
+        },
+        "sendHeaders": true,
+        "headerParameters": {
+          "parameters": [
+            {
+              "name": "accept",
+              "value": "application/json"
+            },
+            {
+              "name": "x-api-key",
+              "value": "={{ $('Параметры аватара2').item.json['API ключ'] }}"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [1664, 16],
+      "id": "f91e5738-4758-442b-a25d-a3a1ae908245",
+      "name": "Get AI video2"
+    }
+  ],
+  "pinData": {},
+  "connections": {
+    "From Telegram": {
+      "main": [
+        [
+          {
+            "node": "Уведомление о запуске",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Параметры аватара": {
+      "main": [
+        [
+          {
+            "node": "Generate Avatar1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Уведомление о запуске": {
+      "main": [
+        [
+          {
+            "node": "Взять ролики в статусе Создать AI Аватар",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Взять ролики в статусе Создать AI Аватар": {
+      "main": [
+        [
+          {
+            "node": "Параметры аватара",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Wait2": {
+      "main": [
+        [
+          {
+            "node": "Get AI video",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "If": {
+      "main": [
+        [
+          {
+            "node": "Download video",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Wait2",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Send a video": {
+      "main": [
+        []
+      ]
+    },
+    "Get AI video": {
+      "main": [
+        [
+          {
+            "node": "If",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Download video": {
+      "main": [
+        [
+          {
+            "node": "Upload file",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Generate Avatar1": {
+      "main": [
+        [
+          {
+            "node": "Wait2",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Upload file": {
+      "main": [
+        [
+          {
+            "node": "Обновить статус в таблице",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Параметры аватара2": {
+      "main": [
+        []
+      ]
+    },
+    "Generate Avatar2": {
+      "main": [
+        []
+      ]
+    },
+    "Get AI video2": {
+      "main": [
+        []
+      ]
+    }
+  },
+  "active": true,
+  "settings": {
+    "executionOrder": "v1",
+    "timeSavedMode": "fixed",
+    "callerPolicy": "workflowsFromSameOwner",
+    "availableInMCP": false,
+    "errorWorkflow": "[скрыто]"
+  },
+  "versionId": "[скрыто]",
+  "meta": {
+    "templateCredsSetupCompleted": true,
+    "instanceId": "[скрыто]"
+  },
+  "id": "[скрыто]",
+  "tags": []
+}
